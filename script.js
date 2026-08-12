@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem('blueStyleUserEmail', email);
             localStorage.setItem('blueStyleLoggedIn', 'true');
-            window.location.href = 'index.html';
+            window.location.href = 'thankyou.html';
         });
     }
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('blueStyleUserEmail', email);
             localStorage.setItem('blueStyleUserName', name);
             localStorage.setItem('blueStyleLoggedIn', 'true');
-            window.location.href = 'index.html';
+            window.location.href = 'thankyou.html';
         });
     }
 
