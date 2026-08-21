@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blue AI | TBS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- BLUE AI -->
+    <main class="blue-ai">
+
+        <header class="ai-header">
+
+            <a href="index.html" class="brand">
+
+                <div class="ai-logo">B</div>
+
+                <div>
+                    <h1>Blue AI</h1>
+                    <p>Powered by TBS</p>
+                </div>
+
+            </a>
+
+            <div class="online">
+                <span></span>
+                Online
+            </div>
+
+        </header>
+
+        <!-- CHAT -->
+        <section class="chat-container" id="chatContainer">
+
+            <div class="message ai-message">
+                <div class="avatar">B</div>
+
+                <div class="bubble">
+                    <strong>Blue AI</strong>
+
+                    <p>
+                        Hello! I'm Blue AI, the intelligent assistant
+                        from TBS. Ask me anything — technology, business,
+                        coding, school, writing, ideas, or questions about TBS.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SUGGESTIONS -->
+        <div class="suggestions">
+
+            <button type="button" onclick="askSuggestion('What services does TBS offer?')">
+                TBS Services
+            </button>
+
+            <button type="button" onclick="askSuggestion('Give me a business idea')">
+                Business Idea
+            </button>
+
+            <button type="button" onclick="askSuggestion('Help me learn JavaScript')">
+                Learn Coding
+            </button>
+
+            <button type="button" onclick="askSuggestion('What can you help me with?')">
+                What can you do?
+            </button>
+
+        </div>
+
+        <!-- INPUT -->
+        <footer class="input-area">
+
+            <button class="voice-btn" id="voiceBtn" type="button" title="Voice input">
+                🎙
+            </button>
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Ask Blue AI anything..."
+                autocomplete="off"
+            >
+
+            <button class="send-btn" id="sendBtn" type="button">
+                ➤
+            </button>
+
+        </footer>
+
+        <div class="footer-text">
+            Blue AI • TBS Intelligent Assistant
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

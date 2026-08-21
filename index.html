@@ -1,411 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Blue Style | Technology, Fashion & Printing</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TBS - The Blue Style. Fashion, technology, custom printing and digital solutions.">
+  <meta name="theme-color" content="#004aad">
+  <title>TBS | The Blue Style</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- Navigation -->
-<header>
-    <nav class="navbar">
+  <!-- =========================================
+       ANNOUNCEMENT BAR
+  ========================================== -->
+  <div class="announcement">
+    <span>TBS • CUSTOM PRINTING • FASHION • TECHNOLOGY • ZIMBABWE</span>
+  </div>
 
-        <div class="logo">
-            <img src="images/logo.png">
-        </div>
+  <!-- =========================================
+       HEADER
+  ========================================== -->
+  <header class="header" id="header">
 
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html">Sign Up</a></li>
-        </ul>
+    <a href="#home" class="brand">
+      <span class="brand-mark">
+        <img src="images/logo.png" alt="TBS Logo">
+      </span>
+      <span class="brand-text">
+        <strong>TBS</strong>
+        <small>The Blue Style</small>
+      </span>
+    </a>
 
-        <a href="#products" class="shop-btn">
-            Shop Now
-        </a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation">☰</button>
 
+    <nav id="nav">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#printing">Custom Printing</a>
+      <a href="#bulk">Bulk Orders</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
-</header>
 
+    <div class="header-actions">
+      <button class="cart-button" id="cartBtn" type="button" aria-label="Open shopping cart">
+        🛒
+        <span id="cartCount">0</span>
+      </button>
 
-<!-- Hero Section -->
+      <a href="#login" class="btn btn-dark">Login</a>
+    </div>
 
-<section class="hero" id="home">
+  </header>
 
-    <div class="hero-text">
+  <!-- =========================================
+       MAIN
+  ========================================== -->
+  <main>
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+    <section class="hero" id="home">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">THE BLUE STYLE • TBS</span>
 
         <h1>
-            Welcome To <span>The Blue Style</span>
+          Build your style.
+          <span>Make it yours.</span>
         </h1>
 
-        <h2>
-            Technology • Fashion • Printing
-        </h2>
-
-        <div id="welcome-banner" class="welcome-banner hidden"></div>
-
         <p>
-            We sell quality smartphones, laptops, smartwatches,
-            accessories and create custom printed T-shirts
-            for individuals and businesses.
+          Shop fashion and technology, or turn your ideas into
+          premium custom T-shirts, uniforms and branded products.
         </p>
-
 
         <div class="hero-buttons">
-
-            <a href="#products" class="btn">
-                Browse Products
-            </a>
-
-            <a href="#services" class="btn outline">
-                Explore Services
-            </a>
-
+          <a href="#shop" class="btn btn-primary">Shop TBS →</a>
+          <a href="#printing" class="btn btn-outline">Start a Custom Order</a>
         </div>
 
-    </div>
+        <div class="trust">
+          <span>Custom Designs</span>
+          <span>Bulk Orders</span>
+          <span>Zimbabwe Delivery</span>
+        </div>
+
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-glow"></div>
+
+        <img src="images/blue.png" alt="TBS Collection" class="hero-image">
+
+        <div class="floating-card card-one">
+          <span>NEW DROP</span>
+          <strong>TBS COLLECTION</strong>
+        </div>
+
+        <div class="floating-card card-two">
+          <span>CUSTOM PRINT</span>
+          <strong>YOUR IDEA →</strong>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         CATEGORIES
+    ====================================== -->
+    <section class="section">
+
+      <div class="section-title">
+        <span class="eyebrow">EXPLORE TBS</span>
+        <h2>Everything you need, in one place.</h2>
+        <p>Discover fashion, technology and professional custom printing from TBS.</p>
+      </div>
+
+      <div class="category-grid">
+
+        <a href="#shop" class="category-card" data-category-link="fashion">
+          <div class="category-icon"></div>
+          <h3>Fashion & T-Shirts</h3>
+          <p>Everyday wear and custom apparel.</p>
+          <span>Shop now →</span>
+        </a>
+
+        <a href="#shop" class="category-card" data-category-link="tech">
+          <div class="category-icon"></div>
+          <h3>Phones & Technology</h3>
+          <p>Smart devices and digital accessories.</p>
+          <span>Explore tech →</span>
+        </a>
+
+        <a href="#printing" class="category-card">
+          <div class="category-icon"></div>
+          <h3>Custom Printing</h3>
+          <p>Put your brand, team or idea on products.</p>
+          <span>Create yours →</span>
+        </a>
+
+        <a href="#bulk" class="category-card">
+          <div class="category-icon"></div>
+          <h3>Bulk Orders</h3>
+          <p>Schools, churches, teams and businesses.</p>
+          <span>Get a quote →</span>
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         PRODUCT GALLERY
+    ====================================== -->
+    <section class="tbs-gallery-section">
+
+      <div class="gallery" id="gallery">
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/lstyles.png" alt="TBS Signature Tee">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">FASHION</span>
+            <h3>TBS Signature Tee</h3>
+            <p>Premium everyday T-shirt</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$18.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/Blue Style.png" alt="Custom Print Tee">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">PRINTING</span>
+            <h3>Custom Print Tee</h3>
+            <p>Made for your design</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$22.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/Hoodie.png" alt="TBS Hoodie">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">FASHION</span>
+            <h3>TBS Hoodie</h3>
+            <p>Comfortable premium hoodie</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$35.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/phone.jpg" alt="Smartphone">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">TECH</span>
+            <h3>Smartphone</h3>
+            <p>Modern smart device</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$180.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/ww.jpg" alt="Smart Watch">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">TECH</span>
+            <h3>Smart Watch</h3>
+            <p>Stay connected on the go</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$45.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tbs-product">
+          <div class="tbs-product-image">
+            <img src="images/hphones.jpg" alt="Wireless Earbuds">
+          </div>
+          <div class="tbs-product-info">
+            <span class="tbs-product-category">TECH</span>
+            <h3>Wireless Earbuds</h3>
+            <p>Compact wireless audio</p>
+            <div class="tbs-product-bottom">
+              <span class="tbs-price">$28.00</span>
+              <button class="tbs-add-button">Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         CUSTOM PRINTING
+    ====================================== -->
+    <section class="printing" id="printing">
+
+      <div class="printing-image">
+        <img src="images/blue.png" alt="TBS Print Studio" class="printing-img">
+      </div>
+
+      <div class="printing-content">
+
+        <span class="eyebrow">CUSTOM PRINTING</span>
 
-
-    <div class="hero-image">
-
-        <img src="images/blue.png" alt="Blue Style Products">
-
-    </div>
-
-
-</section>
-
-
-
-<!-- Products -->
-
-<section id="products">
-
-<h2 class="title">
-Our Products
-</h2>
-
-
-<div class="product-container">
-
-
-<div class="card">
-
-<div class="color-options">
-    <span class="color-bar color-blue"></span>
-</div>
-
-<i class="fa-solid fa-mobile-screen"></i>
-
-<h3>Smartphones</h3>
-
-<p>
-Latest phones with great performance.
-</p>
-
-<a href="#contact" class="card-btn">
-Buy Now
-</a>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="color-options">
-    <span class="color-bar color-blue"></span>
-</div>
-
-<i class="fa-solid fa-laptop"></i>
-
-<h3>Laptops</h3>
-
-<p>
-Powerful laptops for work and school.
-</p>
-
-<a href="#contact" class="card-btn">
-Buy Now
-</a>
-
-</div>
-
-
-
-
-<div class="card">
-
-<div class="color-options">
-    <span class="color-bar color-blue"></span>
-</div>
-
-<i class="fa-solid fa-clock"></i>
-
-<h3>Smart Watches</h3>
-
-<p>
-Modern watches for your lifestyle.
-</p>
-
-<a href="#contact" class="card-btn">
-Buy Now
-</a>
-
-</div>
-
-
-
-
-<div class="card">
-
-<div class="color-options">
-    <span class="color-bar color-blue"></span>
-</div>
-
-<i class="fa-solid fa-shirt"></i>
-
-<h3>Printed T-Shirts</h3>
-
-<p>
-Custom designs for brands and events.
-</p>
-
-<a href="#contact" class="card-btn">
-Order Now
-</a>
-
-</div>
-
-
-
-</div>
-
-</section>
-
-
-
-<!-- Services -->
-
-<section id="services" class="services">
-
-
-<h2 class="title">
-Our Services
-</h2>
-
-
-<div class="service-box">
-
-
-<div>
-<h3>Custom Printing</h3>
-
-<p>
-T-shirts, uniforms and promotional products.
-</p>
-</div>
-
-
-
-<div>
-
-<h3>Branding</h3>
-
-<p>
-Business logos and marketing designs.
-</p>
-
-</div>
-
-
-
-<div>
-
-<h3>Website Design</h3>
-
-<p>
-Modern websites for businesses.
-</p>
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-<!-- Gallery -->
-
-<section id="gallery">
-
-<h2 class="title">
-Our Gallery
-</h2>
-
-
-<div class="gallery">
-
-
-<img src="images/phone.jpg">
-
-<img src="images/lap.jpg">
-
-<img src="images/blue.png">
-
-<img src="images/ww.jpg">
-
-
-</div>
-
-
-</section>
-
-
-
-<!-- About -->
-
-<section class="about">
-
-
-<h2 class="title">
-Why Choose Blue Style?
-</h2>
-
-
-<p>
-
-We provide affordable technology products,
-quality fashion designs and professional
-printing solutions. Our goal is to help
-customers express their style.
-
-</p>
-
-
-</section>
-
-
-
-<!-- Contact -->
-
-<section id="contact" class="contact">
-
-<h2 class="title">
-Contact Us
-</h2>
-
-<p>
-Need help choosing the right phone, laptop, smartwatch, or printed design? Our team is ready to help with fast quotes, custom printing, and expert product advice.
-</p>
-
-<div class="contact-box">
-
-<div class="contact-item">
-
-<i class="fa-brands fa-whatsapp"></i>
-
-<h3>WhatsApp</h3>
-
-<p>
-<a href="https://whatsapp.com/channel/0029VbDYs1n4IBhB6yA5dR1R" target="_blank" rel="noreferrer">Join our WhatsApp channel</a><br>
-<a href="https://wa.me/263788587669" target="_blank" rel="noreferrer">+263 788 587 669</a>
-</p>
-
-</div>
-
-<div class="contact-item">
-
-<i class="fa-solid fa-envelope"></i>
-
-<h3>Email</h3>
-
-<p>
-<a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noreferrer">mpofujames83@gmail.com</a>
-</p>
-
-</div>
-
-<div class="contact-item">
-
-<i class="fa-solid fa-location-dot"></i>
-
-<h3>Location</h3>
-
-<p>
-<a href="https://www.google.com/maps/place/Zimbabwe/@-19.0156588,29.152802,7z/data=!3m1!4b1!4m6!3m5!1s0x1931a4e706b17161:0xa1c0385fc5cbbfee!8m2!3d-19.015438!4d29.154857!16zL20vMDg4cTQ?entry=ttu&g_ep=EgoyMDI2MDgwMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer">Victoria Falls, Zimbabwe</a>
-</p>
-
-</div>
-
-
-</div>
-
-
-
-<a href="https://wa.me/263788587669" class="btn">
-
-<i class="fa-brands fa-whatsapp"></i>
-Message Us on WhatsApp
-
-</a>
-
-
-
-</section>
-
-<!-- Footer -->
-
-
-<footer>
-
-    <div class="footer-content">
         <h2>
-            THE BLUE STYLE
+          Your idea.
+          Your design.
+          Your brand.
         </h2>
 
         <p>
-            Technology | Fashion | Printing
+          Need T-shirts for a business, school, church, birthday,
+          sports team or event? Tell us what you need and TBS will
+          help turn it into a finished product.
         </p>
 
-        <div class="social">
-            <a href="https://www.facebook.com/share/g/19HvBvAhVX/" aria-label="Facebook" target="_blank" rel="noreferrer">
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://www.instagram.com/p/DbnjGxLoKdI/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" aria-label="Instagram" target="_blank" rel="noreferrer">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@james.with.friend?is_from_webapp=1&sender_device=pc" aria-label="TikTok" target="_blank" rel="noreferrer">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <a href="https://wa.me/263788587669" aria-label="WhatsApp" target="_blank" rel="noreferrer">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
+        <div class="features">
+          <div>✓ T-shirts & Apparel</div>
+          <div>✓ Business Branding</div>
+          <div>✓ School & Church Orders</div>
+          <div>✓ Sports Teams & Events</div>
         </div>
 
-        <p class="footer-copy">
-            © 2026 The Blue Style. All Rights Reserved.
+        <button class="btn btn-primary" id="customBtn" type="button">Request Custom Printing →</button>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         HOW IT WORKS
+    ====================================== -->
+    <section class="section">
+
+      <div class="center-title">
+        <span class="eyebrow">HOW IT WORKS</span>
+        <h2>From idea to TBS product.</h2>
+        <p>Our simple process makes ordering easy.</p>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <strong>01</strong>
+          <div class="step-icon">🛍️</div>
+          <h3>Choose</h3>
+          <p>Pick a product or tell us what you want printed.</p>
+        </div>
+
+        <div class="step">
+          <strong>02</strong>
+          <div class="step-icon">🎨</div>
+          <h3>Design</h3>
+          <p>Send your artwork or work with TBS on the design.</p>
+        </div>
+
+        <div class="step">
+          <strong>03</strong>
+          <div class="step-icon">✓</div>
+          <h3>Confirm</h3>
+          <p>Approve your order, quantity and delivery details.</p>
+        </div>
+
+        <div class="step">
+          <strong>04</strong>
+          <div class="step-icon">🚚</div>
+          <h3>Receive</h3>
+          <p>We produce your order and arrange delivery or collection.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         BULK ORDERS
+    ====================================== -->
+    <section class="bulk" id="bulk">
+
+      <div>
+        <span class="eyebrow">BULK ORDERS</span>
+        <h2>Ordering for a team or organisation?</h2>
+        <p>
+          Get a tailored quote for large quantities. TBS supports
+          schools, churches, businesses, sports teams and events.
         </p>
+      </div>
+
+      <button class="btn btn-white" id="bulkBtn" type="button">Request Bulk Quote →</button>
+
+    </section>
+
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
+    <section class="section about" id="about">
+
+      <div>
+        <span class="eyebrow">ABOUT TBS</span>
+        <h2>More than a store. It's your style.</h2>
+        <p>
+          TBS — The Blue Style — brings fashion, technology, custom
+          printing and digital solutions together under one modern brand.
+        </p>
+        <a href="#contact" class="text-link">Talk to TBS →</a>
+      </div>
+
+      <div class="stats">
+        <div>
+          <strong>01</strong>
+          <span>Creative Brand</span>
+        </div>
+        <div>
+          <strong>24/7</strong>
+          <span>Online Enquiries</span>
+        </div>
+        <div>
+          <strong>100%</strong>
+          <span>Custom Focused</span>
+        </div>
+        <div>
+          <strong>ZW</strong>
+          <span>Zimbabwe Based</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =====================================
+         CONTACT
+    ====================================== -->
+    <section class="section contact" id="contact">
+
+      <div class="contact-intro">
+
+        <span class="eyebrow">CONTACT TBS</span>
+        <h2>Let's make something great.</h2>
+        <p>Have a question, product request or custom printing idea? Send us a message.</p>
+
+        <div class="contact-details">
+
+          <div>
+            <span>📧</span>
+            <div>
+              <strong>Email</strong>
+              <small>tbs@gmail.com</small>
+            </div>
+          </div>
+
+          <div>
+            <span>📞</span>
+            <div>
+              <strong>Phone</strong>
+              <small>+263 78 858 7669</small>
+            </div>
+          </div>
+
+          <div>
+            <span>📍</span>
+            <div>
+              <strong>Location</strong>
+              <small>Zimbabwe</small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <form class="contact-form" id="contactForm">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+
+        <select name="service">
+          <option value="General enquiry">General enquiry</option>
+          <option value="Custom printing">Custom printing</option>
+          <option value="Bulk order">Bulk order</option>
+          <option value="Product enquiry">Product enquiry</option>
+        </select>
+
+        <textarea name="message" rows="5" placeholder="Tell us what you need..." required></textarea>
+
+        <button type="submit" class="btn btn-primary">Send Message →</button>
+      </form>
+
+    </section>
+
+    <!-- =====================================
+         ACCOUNT
+    ====================================== -->
+    <section class="section account" id="login">
+
+      <div>
+        <span class="eyebrow">TBS ACCOUNT</span>
+        <h2>Shop smarter with your TBS account.</h2>
+        <p>Save your details, track orders and manage your custom requests.</p>
+      </div>
+
+      <div class="account-buttons">
+        <button class="btn btn-primary" id="loginBtn" type="button">Sign In</button>
+        <button class="btn btn-outline-dark" id="signupBtn" type="button">Create Account</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+  <footer>
+
+    <div class="footer-grid">
+
+      <div>
+        <a href="#home" class="brand footer-brand">
+          <span class="brand-mark">
+            <img src="images/logo.png" alt="TBS Logo">
+          </span>
+          <span class="brand-text">
+            <strong>TBS</strong>
+            <small>The Blue Style</small>
+          </span>
+        </a>
+        <p>Fashion, technology, custom printing and digital solutions.</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <a href="#shop">Fashion</a>
+        <a href="#shop">Technology</a>
+        <a href="#printing">Custom Printing</a>
+        <a href="#bulk">Bulk Orders</a>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <a href="#about">About TBS</a>
+        <a href="#contact">Contact</a>
+        <a href="#login">My Account</a>
+      </div>
+
+      <div>
+        <h4>Need help?</h4>
+        <p>Contact TBS for orders, product enquiries and custom printing.</p>
+      </div>
+
     </div>
 
-</footer>
+    <div class="footer-bottom">
+      <span>© 2026 TBS — The Blue Style. All rights reserved.</span>
+      <span>Privacy • Terms • Zimbabwe</span>
+    </div>
 
+  </footer>
 
+  <!-- =========================================
+       CART OVERLAY
+  ========================================== -->
+  <div class="overlay" id="overlay"></div>
 
-<script src="script.js"></script>
+  <!-- =========================================
+       CART
+  ========================================== -->
+  <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+
+    <div class="cart-header">
+      <div>
+        <span class="cart-label">TBS SHOP</span>
+        <h2>Your Cart</h2>
+      </div>
+
+      <button id="closeCart" type="button" aria-label="Close cart"></button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">$0.00</strong>
+    </div>
+
+    <button class="btn btn-primary full" id="checkoutBtn" type="button">Proceed to Checkout</button>
+
+  </aside>
+
+  <!-- =========================================
+       MODAL
+  ========================================== -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close"></button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- =========================================
+       BLUE AI BUTTON
+  ========================================== -->
+  <button id="blueAiButton" class="blue-ai-button" type="button" aria-label="Open Blue AI">
+    <span class="blue-ai-icon"></span>
+    <span>Blue AI</span>
+  </button>
+
+  <!-- =========================================
+       BLUE AI CHAT
+  ========================================== -->
+  <div id="blueAiChat" class="blue-ai-chat">
+
+    <div class="blue-ai-header">
+      <div class="blue-ai-brand">
+        <div class="blue-ai-logo"></div>
+        <div>
+          <strong>Blue AI</strong>
+          <small>TBS Assistant</small>
+        </div>
+      </div>
+
+      <button id="blueAiClose" class="blue-ai-close" type="button"></button>
+    </div>
+
+    <div id="blueAiMessages" class="blue-ai-messages">
+      <div class="blue-ai-message bot">
+        <div class="blue-ai-avatar"></div>
+        <div class="blue-ai-bubble">
+          <strong>Hi! I'm Blue AI</strong>
+          <p>
+            I'm the TBS AI Assistant. Ask me anything about The Blue Style,
+            our products, custom printing, bulk orders or technology.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blue-ai-suggestions">
+      <button type="button" data-question="What products does TBS sell?">Products</button>
+      <button type="button" data-question="How much is a custom T-shirt?">Custom Printing</button>
+      <button type="button" data-question="How can I place an order?">How to order</button>
+      <button type="button" data-question="Does TBS accept bulk orders?">Bulk Orders</button>
+    </div>
+
+    <form id="blueAiForm" class="blue-ai-input">
+      <input id="blueAiInput" type="text" placeholder="Ask Blue AI anything..." autocomplete="off" required>
+      <button type="submit" id="blueAiSend"></button>
+    </form>
+
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
