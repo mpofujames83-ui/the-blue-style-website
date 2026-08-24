@@ -534,6 +534,7 @@
      JAVASCRIPT
 ====================================== -->
 
+<script src="api-config.js"></script>
 <script>
 
 document.addEventListener(
@@ -811,8 +812,8 @@ document.addEventListener(
                 try {
 
                     const response =
-                        await fetch(
-                            "http://localhost:5000/api/login",
+                        await window.tbsFetch(
+                            "/auth/login",
                             {
 
                                 method: "POST",

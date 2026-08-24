@@ -97,6 +97,7 @@ db.exec(`
 
     CREATE TABLE IF NOT EXISTS analytics_visitors (
         visitor_id TEXT PRIMARY KEY,
+        display_name TEXT,
         first_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         total_sessions INTEGER NOT NULL DEFAULT 0,
@@ -156,5 +157,8 @@ if (!orderColumns.includes("payment_status")) db.exec("ALTER TABLE orders ADD CO
 if (!orderColumns.includes("payment_reference")) db.exec("ALTER TABLE orders ADD COLUMN payment_reference TEXT");
 
 db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_orders_order_number ON orders(order_number)");
+
+const analyticsVisitorColumns = db.prepare("PRAGMA table_info(analytics_visitors)").all().map(column => column.name);
+if (!analyticsVisitorColumns.includes("display_name")) db.exec("ALTER TABLE analytics_visitors ADD COLUMN display_name TEXT");
 
 module.exports = db;

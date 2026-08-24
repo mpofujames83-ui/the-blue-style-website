@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         contactStatus.className = "contact-status";
 
         try {
-            const response = await fetch("/api/contact", {
+            const response = await window.tbsFetch("/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
             submit.textContent = "Sending...";
 
             try {
-                const response = await fetch(form.dataset.endpoint, {
+                const response = await window.tbsFetch(form.dataset.endpoint.replace(/^\/api/, ""), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(Object.fromEntries(new FormData(form).entries()))
@@ -647,7 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializeAnalytics() {
-    const analyticsApi = window.TBS_ANALYTICS_API || "http://localhost:5000/api/analytics/track";
+    const analyticsBase = `${window.TBS_API}/analytics`;
     const storageKey = "tbsAnonymousVisitorId";
     const sessionKey = "tbsAnalyticsSession";
     const visitorId = localStorage.getItem(storageKey) || crypto.randomUUID();
@@ -664,23 +664,41 @@ function initializeAnalytics() {
     const browser = /Edg\//.test(userAgent) ? "Edge" : /Chrome\//.test(userAgent) ? "Chrome" : /Firefox\//.test(userAgent) ? "Firefox" : /Safari\//.test(userAgent) ? "Safari" : "Other";
     const operatingSystem = /Windows/i.test(userAgent) ? "Windows" : /Mac OS|Macintosh/i.test(userAgent) ? "macOS" : /Android/i.test(userAgent) ? "Android" : /iPhone|iPad/i.test(userAgent) ? "iOS" : /Linux/i.test(userAgent) ? "Linux" : "Other";
     const source = document.referrer ? new URL(document.referrer).hostname : "direct";
+    let account;
+    try {
+        account = JSON.parse(localStorage.getItem("tbsUser") || "null");
+    } catch (error) {
+        account = null;
+    }
 
-    fetch(analyticsApi, {
+    const eventPayload = eventType => ({
+        visitor_id: visitorId,
+        session_id: session.id,
+        event_id: crypto.randomUUID(),
+        event_type: eventType,
+        page_path: window.location.pathname + window.location.hash,
+        page_title: document.title,
+        display_name: account?.full_name || account?.name || "",
+        device_type: deviceType,
+        browser,
+        operating_system: operatingSystem,
+        traffic_source: source
+    });
+
+    const sendEvent = (endpoint, eventType, retries = 2) => window.tbsFetch(`${analyticsBase}/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            visitor_id: visitorId,
-            session_id: session.id,
-            event_id: crypto.randomUUID(),
-            page_path: window.location.pathname + window.location.hash,
-            page_title: document.title,
-            device_type: deviceType,
-            browser,
-            operating_system: operatingSystem,
-            traffic_source: source
-        }),
+        body: JSON.stringify(eventPayload(eventType)),
         keepalive: true
-    }).catch(() => {});
+    }, retries).catch(() => {});
+
+    sendEvent("session", "session");
+    sendEvent("pageview", "pageview");
+    window.addEventListener("hashchange", () => sendEvent("pageview", "pageview"));
+    const heartbeat = window.setInterval(() => {
+        if (!document.hidden) sendEvent("heartbeat", "heartbeat");
+    }, 60 * 1000);
+    window.addEventListener("beforeunload", () => window.clearInterval(heartbeat), { once: true });
 }
 
 function initializeSignupForm() {
@@ -713,7 +731,7 @@ function initializeSignupForm() {
         status.className = "signup-status";
 
         try {
-            const response = await fetch("http://localhost:5000/api/auth/register", {
+            const response = await window.tbsFetch("/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)

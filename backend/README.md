@@ -13,6 +13,8 @@ npm start
 
 The API runs at `http://localhost:5000`. Check `GET /api/health` before connecting the frontend.
 
+Frontend pages load the shared `api-config.js`. Local files and a Live Server page on port `5500` use `http://localhost:5000`; a deployed same-origin site uses its own origin. For a separately deployed API, define `window.TBS_API_URL` before loading `api-config.js` with the deployed backend URL.
+
 Set a long random `JWT_SECRET` in `.env`. Never commit `.env`, `data/`, or payment credentials.
 
 ## Architecture
@@ -36,12 +38,15 @@ Set a long random `JWT_SECRET` in `.env`. Never commit `.env`, `data/`, or payme
 
 The website automatically posts anonymous events to `POST /api/analytics/track`. The browser stores a random visitor ID locally and a 30-minute session ID in session storage. Duplicate event IDs are ignored, so a repeated request cannot inflate page-view totals. The server stores no names, emails, passwords, payment data, exact location, or raw IP address.
 
+The browser uses `POST /api/analytics/session` on entry, `POST /api/analytics/pageview` for page changes, and `POST /api/analytics/heartbeat` every minute while the page is visible. A visitor is online only when `last_seen` is within `ANALYTICS_ONLINE_MINUTES` (default five minutes).
+
 Admin reporting endpoints require an admin JWT:
 
 - `GET /api/analytics/overview?period=today|week|month`
 - `GET /api/analytics/visitors?period=today|week|month`
 - `GET /api/analytics/pageviews?period=today|week|month`
 - `GET /api/analytics/realtime`
+- `GET /api/analytics/history`
 
 Open `analytics.html`, enter an admin token, and select a period to view the dashboard. For production, set `TBS_ANALYTICS_API` before loading the website if the API is hosted on a different origin.
 
