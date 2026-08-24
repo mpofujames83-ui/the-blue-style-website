@@ -4,7 +4,7 @@ const app = require("./app");
 const config = require("./config/env");
 
 const server = app.listen(config.port, () => {
-    console.log(`TBS API listening on http://localhost:${config.port}`);
+    console.log(`TBS Backend running on http://localhost:${config.port}`);
 });
 
 function shutdown(signal) {

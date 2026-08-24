@@ -14,6 +14,8 @@ function loadConfig() {
         jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
         paymentWebhookSecret: process.env.PAYMENT_WEBHOOK_SECRET || "development-only-webhook-secret",
         analyticsOnlineMinutes: Number(process.env.ANALYTICS_ONLINE_MINUTES || 5),
+        primaryAdminEmail: (process.env.PRIMARY_ADMIN_EMAIL || "mpofujames83@gmail.com").trim().toLowerCase(),
+        publicAppUrl: process.env.PUBLIC_APP_URL || "http://localhost:5500",
         databasePath: process.env.DATABASE_PATH || "./data/tbs.db",
         corsOrigins: (process.env.CORS_ORIGINS || "http://127.0.0.1:5500,http://localhost:5500")
             .split(",")

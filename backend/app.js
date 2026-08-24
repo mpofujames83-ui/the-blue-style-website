@@ -14,6 +14,7 @@ const userRoutes = require("./routes/users");
 const contactRoutes = require("./routes/contact");
 const analyticsRoutes = require("./routes/analytics");
 const donationRoutes = require("./routes/donations");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/donations", donationRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -114,6 +114,8 @@ router.post("/login", validateBody({
             });
         }
 
+        db.prepare("UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?").run(user.id);
+
         const token = jwt.sign(
             {
                 id: user.id,
@@ -126,6 +128,15 @@ router.post("/login", validateBody({
             }
         );
 
+        try {
+            db.prepare("CREATE TABLE IF NOT EXISTS admin_activity (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, action TEXT NOT NULL, details TEXT, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)").run();
+            if (user.role === "admin") {
+                db.prepare("INSERT INTO admin_activity (user_id, action, details) VALUES (?, ?, ?)").run(user.id, "Login", "Administrator signed in");
+            }
+        } catch (activityError) {
+            console.error("Could not record login activity", activityError);
+        }
+
         res.json({
             message: "Login successful",
 
@@ -136,7 +147,8 @@ router.post("/login", validateBody({
                 full_name: user.full_name,
                 email: user.email,
                 phone: user.phone,
-                role: user.role
+                role: user.role,
+                last_login: new Date().toISOString()
             }
         });
 

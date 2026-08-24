@@ -143,11 +143,44 @@ db.exec(`
         confirmed_at DATETIME
     );
 
+    CREATE TABLE IF NOT EXISTS admin_settings (
+        setting_key TEXT PRIMARY KEY,
+        setting_value TEXT NOT NULL,
+        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS admin_invitations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        token_hash TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        role TEXT NOT NULL DEFAULT 'admin',
+        message TEXT,
+        status TEXT NOT NULL DEFAULT 'pending',
+        expires_at DATETIME NOT NULL,
+        invited_by INTEGER NOT NULL,
+        accepted_user_id INTEGER,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (invited_by) REFERENCES users(id),
+        FOREIGN KEY (accepted_user_id) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS admin_activity (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        action TEXT NOT NULL,
+        details TEXT,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_analytics_visitors_last_seen ON analytics_visitors(last_seen);
     CREATE INDEX IF NOT EXISTS idx_analytics_sessions_last_seen ON analytics_sessions(last_seen);
     CREATE INDEX IF NOT EXISTS idx_analytics_pageviews_viewed_at ON analytics_pageviews(viewed_at);
     CREATE INDEX IF NOT EXISTS idx_donations_created_at ON donations(created_at);
     CREATE INDEX IF NOT EXISTS idx_donations_status ON donations(payment_status);
+    CREATE INDEX IF NOT EXISTS idx_admin_activity_created_at ON admin_activity(created_at);
 `);
 
 const orderColumns = db.prepare("PRAGMA table_info(orders)").all().map(column => column.name);
@@ -160,5 +193,9 @@ db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_orders_order_number ON orders(ord
 
 const analyticsVisitorColumns = db.prepare("PRAGMA table_info(analytics_visitors)").all().map(column => column.name);
 if (!analyticsVisitorColumns.includes("display_name")) db.exec("ALTER TABLE analytics_visitors ADD COLUMN display_name TEXT");
+
+const userColumns = db.prepare("PRAGMA table_info(users)").all().map(column => column.name);
+if (!userColumns.includes("profile_photo")) db.exec("ALTER TABLE users ADD COLUMN profile_photo TEXT");
+if (!userColumns.includes("last_login")) db.exec("ALTER TABLE users ADD COLUMN last_login DATETIME");
 
 module.exports = db;

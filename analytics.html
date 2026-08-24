@@ -20,7 +20,7 @@
   </style>
 </head>
 <body>
-  <header><strong>TBS / Analytics</strong><span>Private admin dashboard · anonymous traffic only</span></header>
+  <header><strong>TBS / Analytics</strong><span>Private admin dashboard · anonymous traffic only · <b id="serverStatus">TBS SERVER: CHECKING</b></span></header>
   <main>
     <div class="toolbar"><div><h1>Visitor activity</h1><p id="status">Enter an admin token to load analytics.</p></div><div><select id="period"><option value="today">Today</option><option value="week" selected>This week</option><option value="month">This month</option></select> <input id="token" type="password" placeholder="Admin JWT token" autocomplete="off"> <button id="load">Load data</button></div></div>
     <section class="metrics"><div class="metric"><small>Total visitors</small><strong id="totalVisitors">-</strong></div><div class="metric"><small>Visitors today</small><strong id="visitorsToday">-</strong></div><div class="metric"><small>Visitors this period</small><strong id="visitorsThisPeriod">-</strong></div><div class="metric online"><small>Currently online</small><strong id="currentlyOnline">-</strong></div><div class="metric"><small>New visitors</small><strong id="newVisitors">-</strong></div><div class="metric"><small>Returning visitors</small><strong id="returningVisitors">-</strong></div></section>
@@ -33,6 +33,9 @@
   <script>
     const api = `${window.TBS_API}/analytics`;
     const $ = id => document.getElementById(id);
+    function updateServerStatus(online) { const node = $("serverStatus"); node.textContent = online ? "TBS SERVER: ONLINE" : "TBS SERVER: OFFLINE"; node.style.color = online ? "#86efac" : "#fca5a5"; }
+    window.addEventListener("tbs-api-status", event => updateServerStatus(event.detail.online));
+    window.tbsCheckHealth().then(updateServerStatus);
     async function get(path) { const response = await window.tbsFetch(api + path, { headers: { Authorization: `Bearer ${$("token").value.trim()}` } }); if (!response.ok) throw new Error(`Request failed (${response.status})`); return response.json(); }
     function list(target, rows, label = "name") { $(target).innerHTML = rows.length ? rows.map(row => `<div class="list-row"><span>${escapeHtml(row[label] || "unknown")}</span><strong>${row.views || row.sessions || 0}</strong></div>`).join("") : "<span>No data yet</span>"; }
     function escapeHtml(value) { return String(value).replace(/[&<>\"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char])); }

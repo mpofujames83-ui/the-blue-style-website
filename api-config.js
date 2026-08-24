@@ -1,4 +1,4 @@
-/* TBS API configuration. Set window.TBS_API_URL before this file for production. */
+/* Set window.TBS_API_URL before this file in production deployments. */
 (function configureTbsApi() {
     const configuredUrl = window.TBS_API_URL;
     const isLocalFile = window.location.protocol === "file:";
@@ -9,6 +9,7 @@
     const apiUrl = String(configuredUrl || defaultUrl).replace(/\/$/, "");
 
     window.TBS_API_URL = apiUrl;
+    window.API_URL = apiUrl;
     window.TBS_API = `${apiUrl}/api`;
 
     window.tbsFetch = async function tbsFetch(path, options = {}, retries = 2) {
@@ -34,9 +35,11 @@
             const response = await window.tbsFetch("/health", {}, 1);
             if (!response.ok) throw new Error(`Health check failed (${response.status})`);
             console.info(`[TBS API] Connected: ${window.TBS_API_URL}`);
+            window.dispatchEvent(new CustomEvent("tbs-api-status", { detail: { online: true } }));
             return true;
         } catch (error) {
             console.warn(`[TBS API] Offline: ${window.TBS_API_URL}`);
+            window.dispatchEvent(new CustomEvent("tbs-api-status", { detail: { online: false } }));
             return false;
         }
     };

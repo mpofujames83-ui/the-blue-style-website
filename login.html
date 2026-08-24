@@ -913,8 +913,9 @@ document.addEventListener(
                     setTimeout(
                         function () {
 
-                            window.location.href =
-                                "index.html";
+                            window.location.href = data.user?.role === "admin"
+                                ? "admin.html"
+                                : "index.html";
 
                         },
                         1000
@@ -930,10 +931,7 @@ document.addEventListener(
                     );
 
 
-                    if (
-                        error.name ===
-                        "TypeError"
-                    ) {
+                    if (error instanceof TypeError && /fetch|network|failed/i.test(error.message)) {
 
                         showMessage(
                             "Cannot connect to TBS server. Make sure your backend is running on port 5000.",

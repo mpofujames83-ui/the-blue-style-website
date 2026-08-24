@@ -15,6 +15,13 @@ The API runs at `http://localhost:5000`. Check `GET /api/health` before connecti
 
 Frontend pages load the shared `api-config.js`. Local files and a Live Server page on port `5500` use `http://localhost:5000`; a deployed same-origin site uses its own origin. For a separately deployed API, define `window.TBS_API_URL` before loading `api-config.js` with the deployed backend URL.
 
+For a separately hosted production frontend, set the URL before the config script:
+
+```html
+<script>window.TBS_API_URL = "https://your-real-tbs-backend.example.com";</script>
+<script src="api-config.js"></script>
+```
+
 Set a long random `JWT_SECRET` in `.env`. Never commit `.env`, `data/`, or payment credentials.
 
 ## Architecture
