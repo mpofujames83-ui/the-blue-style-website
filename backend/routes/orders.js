@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../database");
 const authenticateToken = require("../middleware/auth");
 const adminOnly = require("../middleware/admin");
+const validateBody = require("../middleware/validate");
 
 const router = express.Router();
 
@@ -10,18 +11,32 @@ const router = express.Router();
 router.post(
     "/",
     authenticateToken,
+    validateBody({
+        delivery_address: { required: true, max: 500 },
+        items: { required: true, type: "object" },
+        payment_method: { required: true, max: 40 }
+    }),
     (req, res) => {
 
         try {
 
             const {
                 delivery_address,
-                items
+                items,
+                payment_method
             } = req.body;
 
             if (!Array.isArray(items) || items.length === 0) {
                 return res.status(400).json({
                     message: "Order must contain products"
+                });
+            }
+
+            const paymentMethods = ["cash_on_delivery", "ecocash", "bank_transfer", "card"];
+            if (!paymentMethods.includes(payment_method)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Unsupported payment method"
                 });
             }
 
@@ -70,28 +85,35 @@ router.post(
                 });
             }
 
-            const createOrder = db.transaction(() => {
+            const createOrder = () => {
+                const orderNumber = `TBS-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${String(Date.now()).slice(-6)}`;
 
                 const order = db.prepare(`
                     INSERT INTO orders
                     (
+                        order_number,
                         user_id,
                         customer_name,
                         phone,
                         email,
                         delivery_address,
                         total,
-                        status
+                        status,
+                        payment_method,
+                        payment_status
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 `).run(
+                    orderNumber,
                     user.id,
                     user.full_name,
                     user.phone,
                     user.email,
                     delivery_address || "",
                     total,
-                    "Pending"
+                    "Pending",
+                    payment_method,
+                    payment_method === "card" ? "awaiting_gateway" : "pending"
                 );
 
                 const orderId = order.lastInsertRowid;
@@ -126,15 +148,28 @@ router.post(
                     );
                 }
 
-                return orderId;
-            });
+                return { orderId, orderNumber };
+            };
 
-            const orderId = createOrder();
+            db.exec("BEGIN");
+            let createdOrder;
+            try {
+                createdOrder = createOrder();
+                db.exec("COMMIT");
+            } catch (error) {
+                db.exec("ROLLBACK");
+                throw error;
+            }
 
             res.status(201).json({
+                success: true,
                 message: "Order placed successfully",
-                orderId,
-                total
+                orderId: createdOrder.orderId,
+                orderNumber: createdOrder.orderNumber,
+                total,
+                currency: "USD",
+                paymentMethod: payment_method,
+                paymentStatus: payment_method === "card" ? "awaiting_gateway" : "pending"
             });
 
         } catch (error) {
@@ -227,6 +262,35 @@ router.put(
         res.json({
             message: "Order status updated"
         });
+    }
+);
+
+// ADMIN PAYMENT STATUS / GATEWAY WEBHOOK TARGET
+router.put(
+    "/:id/payment",
+    authenticateToken,
+    adminOnly,
+    validateBody({
+        payment_status: { required: true, max: 40 },
+        payment_reference: { max: 160 }
+    }),
+    (req, res) => {
+        const allowedStatuses = ["pending", "awaiting_gateway", "paid", "failed", "refunded"];
+        if (!allowedStatuses.includes(req.body.payment_status)) {
+            return res.status(400).json({ success: false, message: "Invalid payment status" });
+        }
+
+        const result = db.prepare(`
+            UPDATE orders
+            SET payment_status = ?, payment_reference = ?
+            WHERE id = ?
+        `).run(req.body.payment_status, req.body.payment_reference || null, req.params.id);
+
+        if (result.changes === 0) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        res.json({ success: true, message: "Payment status updated" });
     }
 );
 

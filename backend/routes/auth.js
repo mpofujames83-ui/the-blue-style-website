@@ -2,12 +2,18 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../database");
+const config = require("../config/env");
+const validateBody = require("../middleware/validate");
 
 const router = express.Router();
 
 
 // REGISTER
-router.post("/register", async (req, res) => {
+router.post("/register", validateBody({
+    full_name: { required: true, max: 120 },
+    email: { required: true, max: 254 },
+    password: { required: true, max: 128 }
+}), async (req, res) => {
 
     try {
 
@@ -24,9 +30,10 @@ router.post("/register", async (req, res) => {
             });
         }
 
+        const normalizedEmail = email.trim().toLowerCase();
         const existingUser = db.prepare(
             "SELECT id FROM users WHERE email = ?"
-        ).get(email);
+        ).get(normalizedEmail);
 
         if (existingUser) {
             return res.status(409).json({
@@ -44,8 +51,8 @@ router.post("/register", async (req, res) => {
             (full_name, email, phone, password, role)
             VALUES (?, ?, ?, ?, ?)
         `).run(
-            full_name,
-            email,
+            full_name.trim(),
+            normalizedEmail,
             phone || "",
             hashedPassword,
             "customer"
@@ -68,7 +75,10 @@ router.post("/register", async (req, res) => {
 
 
 // LOGIN
-router.post("/login", async (req, res) => {
+router.post("/login", validateBody({
+    email: { required: true, max: 254 },
+    password: { required: true, max: 128 }
+}), async (req, res) => {
 
     try {
 
@@ -85,7 +95,7 @@ router.post("/login", async (req, res) => {
 
         const user = db.prepare(
             "SELECT * FROM users WHERE email = ?"
-        ).get(email);
+        ).get(email.trim().toLowerCase());
 
         if (!user) {
             return res.status(401).json({
@@ -110,9 +120,9 @@ router.post("/login", async (req, res) => {
                 email: user.email,
                 role: user.role
             },
-            process.env.JWT_SECRET,
+            config.jwtSecret,
             {
-                expiresIn: "7d"
+                expiresIn: config.jwtExpiresIn
             }
         );
 

@@ -1,8 +1,13 @@
-const Database = require("better-sqlite3");
+const fs = require("fs");
+const path = require("path");
+const { DatabaseSync } = require("node:sqlite");
+const config = require("./config/env");
 
-const db = new Database("tbs.db");
+const databasePath = path.resolve(__dirname, config.databasePath);
+fs.mkdirSync(path.dirname(databasePath), { recursive: true });
+const db = new DatabaseSync(databasePath);
 
-db.pragma("foreign_keys = ON");
+db.exec("PRAGMA foreign_keys = ON");
 
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
@@ -43,6 +48,7 @@ db.exec(`
 
     CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_number TEXT UNIQUE,
         user_id INTEGER NOT NULL,
         customer_name TEXT NOT NULL,
         phone TEXT,
@@ -50,6 +56,9 @@ db.exec(`
         delivery_address TEXT,
         total REAL NOT NULL,
         status TEXT DEFAULT 'Pending',
+        payment_method TEXT NOT NULL DEFAULT 'not_selected',
+        payment_status TEXT NOT NULL DEFAULT 'pending',
+        payment_reference TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
@@ -73,6 +82,79 @@ db.exec(`
         message TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS service_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        request_number TEXT UNIQUE NOT NULL,
+        type TEXT NOT NULL,
+        name TEXT NOT NULL,
+        contact TEXT NOT NULL,
+        quantity INTEGER,
+        details TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'new',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS analytics_visitors (
+        visitor_id TEXT PRIMARY KEY,
+        first_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        total_sessions INTEGER NOT NULL DEFAULT 0,
+        total_pageviews INTEGER NOT NULL DEFAULT 0
+    );
+
+    CREATE TABLE IF NOT EXISTS analytics_sessions (
+        session_id TEXT PRIMARY KEY,
+        visitor_id TEXT NOT NULL,
+        started_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        duration_seconds INTEGER NOT NULL DEFAULT 0,
+        pageviews INTEGER NOT NULL DEFAULT 0,
+        device_type TEXT NOT NULL DEFAULT 'unknown',
+        browser TEXT NOT NULL DEFAULT 'unknown',
+        operating_system TEXT NOT NULL DEFAULT 'unknown',
+        traffic_source TEXT NOT NULL DEFAULT 'direct',
+        FOREIGN KEY (visitor_id) REFERENCES analytics_visitors(visitor_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS analytics_pageviews (
+        event_id TEXT PRIMARY KEY,
+        visitor_id TEXT NOT NULL,
+        session_id TEXT NOT NULL,
+        page_path TEXT NOT NULL,
+        page_title TEXT,
+        viewed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (visitor_id) REFERENCES analytics_visitors(visitor_id) ON DELETE CASCADE,
+        FOREIGN KEY (session_id) REFERENCES analytics_sessions(session_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS donations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        reference TEXT UNIQUE NOT NULL,
+        donor_name TEXT NOT NULL,
+        donor_email TEXT,
+        amount REAL NOT NULL CHECK (amount > 0),
+        currency TEXT NOT NULL DEFAULT 'USD',
+        payment_method TEXT NOT NULL,
+        payment_status TEXT NOT NULL DEFAULT 'pending',
+        provider_reference TEXT,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        confirmed_at DATETIME
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_analytics_visitors_last_seen ON analytics_visitors(last_seen);
+    CREATE INDEX IF NOT EXISTS idx_analytics_sessions_last_seen ON analytics_sessions(last_seen);
+    CREATE INDEX IF NOT EXISTS idx_analytics_pageviews_viewed_at ON analytics_pageviews(viewed_at);
+    CREATE INDEX IF NOT EXISTS idx_donations_created_at ON donations(created_at);
+    CREATE INDEX IF NOT EXISTS idx_donations_status ON donations(payment_status);
 `);
+
+const orderColumns = db.prepare("PRAGMA table_info(orders)").all().map(column => column.name);
+if (!orderColumns.includes("order_number")) db.exec("ALTER TABLE orders ADD COLUMN order_number TEXT");
+if (!orderColumns.includes("payment_method")) db.exec("ALTER TABLE orders ADD COLUMN payment_method TEXT NOT NULL DEFAULT 'not_selected'");
+if (!orderColumns.includes("payment_status")) db.exec("ALTER TABLE orders ADD COLUMN payment_status TEXT NOT NULL DEFAULT 'pending'");
+if (!orderColumns.includes("payment_reference")) db.exec("ALTER TABLE orders ADD COLUMN payment_reference TEXT");
+
+db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_orders_order_number ON orders(order_number)");
 
 module.exports = db;

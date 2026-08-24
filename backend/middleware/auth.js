@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config/env");
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -9,9 +10,9 @@ function authenticateToken(req, res, next) {
         });
     }
 
-    const token = authHeader.split(" ")[1];
+    const [scheme, token] = authHeader.split(" ");
 
-    if (!token) {
+    if (scheme !== "Bearer" || !token) {
         return res.status(401).json({
             message: "Invalid authentication token"
         });
@@ -20,7 +21,7 @@ function authenticateToken(req, res, next) {
     try {
         const decoded = jwt.verify(
             token,
-            process.env.JWT_SECRET
+            config.jwtSecret
         );
 
         req.user = decoded;

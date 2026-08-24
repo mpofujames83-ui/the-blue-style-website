@@ -1,39 +1,16 @@
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
+const app = require("./app");
+const config = require("./config/env");
 
-const app = express();
-
-const PORT = process.env.PORT || 5000;
-
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100
+const server = app.listen(config.port, () => {
+    console.log(`TBS API listening on http://localhost:${config.port}`);
 });
 
-app.use(limiter);
+function shutdown(signal) {
+    console.log(`${signal}: shutting down TBS API`);
+    server.close(() => process.exit(0));
+}
 
-app.get("/", (req, res) => {
-    res.json({
-        success: true,
-        message: "TBS Backend API is running!"
-    });
-});
-
-app.get("/api/health", (req, res) => {
-    res.json({
-        status: "OK",
-        message: "TBS Backend is healthy"
-    });
-});
-
-app.listen(PORT, () => {
-    console.log(`TBS Backend running on http://localhost:${PORT}`);
-});
+process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));

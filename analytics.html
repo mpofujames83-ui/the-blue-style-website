@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TBS Analytics | Admin</title>
+  <style>
+    :root { --blue:#0866ff; --deep:#0546b8; --ink:#071a33; --cloud:#f5f8fc; --line:#dfe6ef; --muted:#667085; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--cloud); font:14px Arial,sans-serif; }
+    header { padding:24px 6%; display:flex; justify-content:space-between; align-items:center; background:var(--ink); color:white; }
+    header strong { font-size:22px; } header span { color:#9dc0ff; font-size:12px; }
+    main { max-width:1280px; margin:auto; padding:38px 6%; } .toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:26px; }
+    select,input,button { font:inherit; border:1px solid var(--line); border-radius:8px; padding:11px 14px; background:white; color:var(--ink); } button { cursor:pointer; background:var(--blue); color:white; border-color:var(--blue); font-weight:bold; }
+    .metrics { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; } .metric,.panel { background:white; border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 28px #071a3310; }
+    .metric { padding:20px; min-height:112px; } .metric small { color:var(--muted); display:block; margin-bottom:14px; } .metric strong { font-size:30px; }
+    .online strong { color:#16a34a; } .grid { display:grid; grid-template-columns:1.25fr .75fr; gap:16px; margin-top:16px; } .panel { padding:22px; } h2 { font-size:18px; margin:0 0 18px; }
+    .bars { display:flex; gap:10px; height:210px; align-items:end; border-bottom:1px solid var(--line); } .bar-wrap { flex:1; text-align:center; color:var(--muted); font-size:11px; } .bar { min-height:3px; background:linear-gradient(var(--blue),var(--deep)); border-radius:6px 6px 0 0; margin-bottom:8px; }
+    .list { display:grid; gap:12px; } .list-row { display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; border-bottom:1px solid var(--line); } .list-row span { color:var(--muted); }
+    #status { color:var(--muted); min-height:20px; } @media(max-width:900px) { .metrics { grid-template-columns:repeat(3,1fr); } .grid { grid-template-columns:1fr; } } @media(max-width:560px) { header { display:block; } header span { display:block; margin-top:8px; } .toolbar { align-items:stretch; flex-direction:column; } .metrics { grid-template-columns:repeat(2,1fr); } main { padding:26px 5%; } }
+  </style>
+</head>
+<body>
+  <header><strong>TBS / Analytics</strong><span>Private admin dashboard · anonymous traffic only</span></header>
+  <main>
+    <div class="toolbar"><div><h1>Visitor activity</h1><p id="status">Enter an admin token to load analytics.</p></div><div><select id="period"><option value="today">Today</option><option value="week" selected>This week</option><option value="month">This month</option></select> <input id="token" type="password" placeholder="Admin JWT token" autocomplete="off"> <button id="load">Load data</button></div></div>
+    <section class="metrics"><div class="metric"><small>Total visitors</small><strong id="totalVisitors">-</strong></div><div class="metric"><small>Visitors today</small><strong id="visitorsToday">-</strong></div><div class="metric"><small>Visitors this period</small><strong id="visitorsThisPeriod">-</strong></div><div class="metric online"><small>Currently online</small><strong id="currentlyOnline">-</strong></div><div class="metric"><small>New visitors</small><strong id="newVisitors">-</strong></div><div class="metric"><small>Returning visitors</small><strong id="returningVisitors">-</strong></div></section>
+    <div class="grid"><section class="panel"><h2>Donation totals</h2><div class="list" id="donationSummary"></div></section><section class="panel"><h2>Recent supporters</h2><div class="list" id="donationRecent"></div></section></div>
+    <div class="grid"><section class="panel"><h2>Visitor activity</h2><div class="bars" id="chart"></div></section><section class="panel"><h2>Most visited pages</h2><div class="list" id="pages"></div></section></div>
+    <div class="grid"><section class="panel"><h2>Traffic sources</h2><div class="list" id="sources"></div></section><section class="panel"><h2>Devices, browsers, operating systems</h2><div class="list" id="breakdowns"></div></section></div>
+  </main>
+  <script>
+    const api = "http://localhost:5000/api/analytics";
+    const $ = id => document.getElementById(id);
+    async function get(path) { const response = await fetch(api + path, { headers: { Authorization: `Bearer ${$("token").value.trim()}` } }); if (!response.ok) throw new Error(`Request failed (${response.status})`); return response.json(); }
+    function list(target, rows, label = "name") { $(target).innerHTML = rows.length ? rows.map(row => `<div class="list-row"><span>${escapeHtml(row[label] || "unknown")}</span><strong>${row.views || row.sessions || 0}</strong></div>`).join("") : "<span>No data yet</span>"; }
+    function escapeHtml(value) { return String(value).replace(/[&<>\"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char])); }
+    async function load() { try { $("status").textContent = "Loading..."; const period = $("period").value; const [overview, pageviews, visitors, realtime, donations] = await Promise.all([get(`/overview?period=${period}`), get(`/pageviews?period=${period}`), get(`/visitors?period=${period}`), get("/realtime"), fetch("http://localhost:5000/api/donations/overview", {headers:{Authorization:`Bearer ${$("token").value.trim()}`}}).then(response => response.ok ? response.json() : {summary:{},recent:[]})]); Object.entries(overview.metrics).forEach(([key,value]) => { const node = $(key); if (node) node.textContent = value.toLocaleString(); }); $("currentlyOnline").textContent = realtime.currentlyOnline.toLocaleString(); list("pages", pageviews.pages, "page"); list("sources", visitors.breakdowns.trafficSources); list("breakdowns", [...visitors.breakdowns.devices.map(row => ({...row,name:`Device: ${row.name}`})), ...visitors.breakdowns.browsers.map(row => ({...row,name:`Browser: ${row.name}`})), ...visitors.breakdowns.operatingSystems.map(row => ({...row,name:`OS: ${row.name}`}))]); list("donationSummary", Object.entries(donations.summary || {}).map(([name,value]) => ({name, sessions: typeof value === "number" ? `$${value.toFixed(2)}` : value}))); list("donationRecent", donations.recent || [], "donorName"); const max = Math.max(...pageviews.activity.map(row => row.visitors), 1); $("chart").innerHTML = pageviews.activity.length ? pageviews.activity.map(row => `<div class="bar-wrap"><div class="bar" style="height:${Math.max(5, row.visitors / max * 180)}px"></div>${escapeHtml(row.day.slice(5))}</div>`).join("") : "<span>No activity yet</span>"; $("status").textContent = `Updated ${new Date().toLocaleTimeString()}`; } catch (error) { $("status").textContent = error.message; } }
+    $("load").addEventListener("click", load); $("period").addEventListener("change", load); setInterval(() => { if ($("token").value) load(); }, 60000);
+  </script>
+</body>
+</html>
