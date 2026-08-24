@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializeAnalytics();
     initializeSignupForm();
+    initializeBlueAI();
 
     let cart =
         JSON.parse(
@@ -735,3 +736,129 @@ function initializeSignupForm() {
         }
     });
 }
+
+function initializeBlueAI() {
+    const standaloneInput = document.getElementById("userInput");
+    const standaloneSend = document.getElementById("sendBtn");
+    const standaloneChat = document.getElementById("chatContainer");
+    const widgetForm = document.getElementById("blueAiForm");
+    const widgetInput = document.getElementById("blueAiInput");
+    const widgetMessages = document.getElementById("blueAiMessages");
+    const widgetButton = document.getElementById("blueAiButton");
+    const widgetChat = document.getElementById("blueAiChat");
+    const widgetClose = document.getElementById("blueAiClose");
+
+    const getReply = question => {
+        const text = question.toLowerCase();
+        if (text.includes("service") || text.includes("offer")) {
+            return "TBS offers fashion, technology products, custom printing, bulk orders and digital solutions.";
+        }
+        if (text.includes("product") || text.includes("sell") || text.includes("price")) {
+            return "You can shop TBS clothing, mugs, power banks, smartphones, smart watches and wireless earbuds from the store.";
+        }
+        if (text.includes("order") || text.includes("buy")) {
+            return "Choose a product, select Add to cart, open your cart, and continue to checkout.";
+        }
+        if (text.includes("print") || text.includes("shirt") || text.includes("brand")) {
+            return "TBS creates custom T-shirts, apparel and branded products for businesses, schools, churches, teams and events.";
+        }
+        if (text.includes("bulk") || text.includes("team")) {
+            return "Use the Bulk Orders section to request a tailored quote for your organisation or team.";
+        }
+        return "I can help with TBS products, services, custom printing, bulk orders and placing an order. What would you like to know?";
+    };
+
+    const addStandaloneMessage = (question, answer) => {
+        if (!standaloneChat) return;
+        standaloneChat.insertAdjacentHTML("beforeend", `
+            <div class="message user-message"><div class="avatar">You</div><div class="bubble"><p>${escapeAIText(question)}</p></div></div>
+            <div class="message ai-message"><div class="avatar">B</div><div class="bubble"><strong>Blue AI</strong><p>${escapeAIText(answer)}</p></div></div>`);
+        standaloneChat.scrollTop = standaloneChat.scrollHeight;
+    };
+
+    const addWidgetMessage = (question, answer) => {
+        if (!widgetMessages) return;
+        widgetMessages.insertAdjacentHTML("beforeend", `
+            <div class="blue-ai-message user"><div class="blue-ai-bubble"><p>${escapeAIText(question)}</p></div></div>
+            <div class="blue-ai-message bot"><div class="blue-ai-bubble"><strong>Blue AI</strong><p>${escapeAIText(answer)}</p></div></div>`);
+        widgetMessages.scrollTop = widgetMessages.scrollHeight;
+    };
+
+    const submitStandalone = () => {
+        const question = standaloneInput?.value.trim();
+        if (!question) return;
+        standaloneInput.value = "";
+        addStandaloneMessage(question, getReply(question));
+    };
+
+    const submitWidget = question => {
+        const cleanQuestion = question.trim();
+        if (!cleanQuestion) return;
+        addWidgetMessage(cleanQuestion, getReply(cleanQuestion));
+    };
+
+    standaloneSend?.addEventListener("click", submitStandalone);
+    standaloneInput?.addEventListener("keydown", event => {
+        if (event.key === "Enter") submitStandalone();
+    });
+    widgetForm?.addEventListener("submit", event => {
+        event.preventDefault();
+        submitWidget(widgetInput.value);
+        widgetInput.value = "";
+    });
+    document.querySelectorAll(".blue-ai-suggestions button").forEach(button => {
+        button.addEventListener("click", () => submitWidget(button.dataset.question || button.textContent));
+    });
+    widgetButton?.addEventListener("click", () => {
+        widgetChat?.classList.add("active");
+        widgetChat?.setAttribute("aria-hidden", "false");
+        widgetInput?.focus();
+    });
+    widgetClose?.addEventListener("click", () => {
+        widgetChat?.classList.remove("active");
+        widgetChat?.setAttribute("aria-hidden", "true");
+        widgetButton?.focus();
+    });
+    document.querySelectorAll(".suggestions button").forEach(button => {
+        button.addEventListener("click", () => {
+            if (standaloneInput) {
+                standaloneInput.value = button.dataset.question || button.textContent.trim();
+                submitStandalone();
+            }
+        });
+    });
+
+    const voiceButton = document.getElementById("voiceBtn");
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    voiceButton?.addEventListener("click", () => {
+        if (!SpeechRecognition || !standaloneInput) {
+            standaloneInput?.focus();
+            return;
+        }
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.onresult = event => {
+            standaloneInput.value = event.results[0][0].transcript;
+            submitStandalone();
+        };
+        recognition.start();
+    });
+}
+
+function escapeAIText(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    }[character]));
+}
+
+window.askSuggestion = function askSuggestion(question) {
+    const input = document.getElementById("userInput");
+    const send = document.getElementById("sendBtn");
+    if (!input || !send) return;
+    input.value = question;
+    send.click();
+};
