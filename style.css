@@ -2150,6 +2150,7 @@ a {
     }
 
 }
+
 /* =========================================
    TBS GALLERY
    ========================================= */
@@ -2286,7 +2287,2283 @@ a {
     line-height: 1.6;
 }
 
+/* =========================================
+   TBS LOGIN
+========================================= */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #0866ff;
+    --dark-blue: #0546b8;
+    --navy: #071a33;
+    --text: #172033;
+    --muted: #6b7280;
+    --light: #f5f8fc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --danger: #dc2626;
+    --success: #16a34a;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background:
+        radial-gradient(
+            circle at top left,
+            #dceaff 0%,
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #f5f8fc,
+            #eaf2ff
+        );
+
+    color: var(--text);
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.auth-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.auth-container {
+    width: 100%;
+    max-width: 1050px;
+    min-height: 650px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    background: var(--white);
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px rgba(7, 26, 51, 0.14);
+}
+
+
+/* =========================================
+   LEFT BRAND
+========================================= */
+
+.auth-brand {
+    position: relative;
+
+    padding: 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0866ff,
+            #0546b8 60%,
+            #071a33
+        );
+
+    overflow: hidden;
+}
+
+.auth-brand::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.08);
+
+    top: -120px;
+    right: -100px;
+}
+
+.auth-brand::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.05);
+
+    bottom: -100px;
+    left: -100px;
+}
+
+
+.brand-logo {
+    position: relative;
+    z-index: 2;
+
+    width: 75px;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.15);
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    font-size: 27px;
+    font-weight: 800;
+
+    margin-bottom: 35px;
+}
+
+
+.auth-brand h1 {
+    position: relative;
+    z-index: 2;
+
+    font-size: 42px;
+    line-height: 1.15;
+
+    margin-bottom: 20px;
+}
+
+.auth-brand h1 span {
+    display: block;
+    color: #dceaff;
+}
+
+
+.auth-brand > p {
+    position: relative;
+    z-index: 2;
+
+    max-width: 430px;
+
+    color: rgba(255,255,255,0.82);
+
+    line-height: 1.8;
+
+    font-size: 15px;
+}
+
+
+.brand-line {
+    position: relative;
+    z-index: 2;
+
+    width: 70px;
+    height: 4px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    margin: 30px 0;
+}
+
+
+.brand-features {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.brand-features div {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    color: rgba(255,255,255,0.9);
+
+    font-size: 14px;
+}
+
+.brand-features i {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.13);
+}
+
+
+/* =========================================
+   AUTH CARD
+========================================= */
+
+.auth-card {
+    padding: 50px 55px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: white;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.auth-header {
+    margin-bottom: 25px;
+}
+
+.small-title {
+    display: inline-block;
+
+    color: var(--blue);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+.auth-header h2 {
+    font-size: 31px;
+
+    line-height: 1.2;
+
+    margin-bottom: 8px;
+}
+
+.auth-header p {
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+}
+
+.input-box {
+    position: relative;
+
+    width: 100%;
+}
+
+.input-box > i {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #94a3b8;
+
+    pointer-events: none;
+}
+
+.input-box input {
+    width: 100%;
+
+    height: 52px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    padding: 0 48px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    color: var(--text);
+
+    background: #fbfdff;
+
+    transition: 0.2s;
+}
+
+.input-box input:focus {
+    border-color: var(--blue);
+
+    background: white;
+
+    box-shadow:
+        0 0 0 4px rgba(8,102,255,0.08);
+}
+
+.input-box input::placeholder {
+    color: #a0a8b5;
+}
+
+
+.password-toggle {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+}
+
+.password-toggle:hover {
+    background: #f1f5f9;
+
+    color: var(--blue);
+}
+
+
+.form-group small {
+    display: block;
+
+    color: var(--danger);
+
+    font-size: 11px;
+
+    margin-top: 5px;
+
+    min-height: 15px;
+}
+
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.form-options {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 4px 0 20px;
+}
+
+.remember {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.remember input {
+    width: 15px;
+    height: 15px;
+
+    accent-color: var(--blue);
+}
+
+
+.forgot-button {
+    border: none;
+
+    background: transparent;
+
+    color: var(--blue);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.forgot-button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MAIN BUTTON
+========================================= */
+
+.main-button {
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--dark-blue)
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.main-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 25px rgba(8,102,255,0.25);
+}
+
+.main-button:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================
+   SPINNER
+========================================= */
+
+.spinner {
+    display: none;
+
+    width: 17px;
+    height: 17px;
+
+    border: 2px solid rgba(255,255,255,0.4);
+
+    border-top-color: white;
+
+    border-radius: 50%;
+
+    animation: spin 0.7s linear infinite;
+}
+
+.loading .spinner {
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.login-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 24px 0;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: var(--border);
+}
+
+.login-divider span {
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   GOOGLE
+========================================= */
+
+.google-button {
+    width: 100%;
+
+    height: 50px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: white;
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    transition: 0.2s;
+}
+
+.google-button:hover {
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+}
+
+.google-letter {
+    font-size: 19px;
+
+    font-weight: 800;
+
+    color: #4285f4;
+}
+
+
+/* =========================================
+   SWITCH
+========================================= */
+
+.switch-text {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 24px;
+}
+
+.switch-text button {
+    border: none;
+
+    background: transparent;
+
+    color: var(--blue);
+
+    font-family: inherit;
+
+    font-size: inherit;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.switch-text button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.login-message {
+    display: none;
+
+    padding: 11px 14px;
+
+    border-radius: 10px;
+
+    margin-bottom: 18px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.login-message.error {
+    display: block;
+
+    background: #fef2f2;
+
+    color: var(--danger);
+
+    border: 1px solid #fecaca;
+}
+
+.login-message.success {
+    display: block;
+
+    background: #f0fdf4;
+
+    color: var(--success);
+
+    border: 1px solid #bbf7d0;
+}
+
+
+/* =========================================
+   HIDDEN
+========================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 850px) {
+
+    .auth-container {
+        grid-template-columns: 1fr;
+
+        max-width: 520px;
+    }
+
+    .auth-brand {
+        display: none;
+    }
+
+    .auth-card {
+        padding: 40px 30px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .auth-page {
+        padding: 15px;
+    }
+
+    .auth-card {
+        padding: 30px 20px;
+    }
+
+    .auth-header h2 {
+        font-size: 27px;
+    }
+
+    .form-options {
+        gap: 10px;
+    }
+
+}
+/* =========================================
+   TBS LOGIN PAGE
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071a33 0%,
+            #0546b8 45%,
+            #0866ff 100%
+        );
+
+    color: #172033;
+
+    overflow-x: hidden;
+}
+
+/* =========================================
+   PAGE
+========================================= */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+
+    background: #ffffff;
+
+    padding: 40px;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.30);
+
+    animation: cardIn 0.5s ease;
+}
+
+@keyframes cardIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.logo-box {
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0866ff,
+            #0546b8
+        );
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 12px 30px rgba(
+            8,
+            102,
+            255,
+            0.30
+        );
+}
+
+.logo h1 {
+    color: #071a33;
+
+    font-size: 26px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.logo p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.message {
+    display: none;
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    line-height: 1.5;
+}
+
+.message.error {
+    display: block;
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    display: block;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    border: 1px solid #bbf7d0;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.field {
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+.field label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #172033;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+
+    height: 52px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d9e0ea;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.field input::placeholder {
+    color: #9ca3af;
+}
+
+.field input:focus {
+    border-color: #0866ff;
+
+    box-shadow:
+        0 0 0 4px rgba(
+            8,
+            102,
+            255,
+            0.10
+        );
+}
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+.password-box {
+    position: relative;
+
+    width: 100%;
+}
+
+.password-box input {
+    padding-right: 75px;
+}
+
+#showPassword {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    height: 38px;
+
+    padding: 0 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #0866ff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#showPassword:hover {
+    background: #f0f6ff;
+}
+
+/* =========================================
+   ERROR TEXT
+========================================= */
+
+.field small {
+    display: block;
+
+    min-height: 17px;
+
+    margin-top: 5px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+}
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.options {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin: 4px 0 22px;
+}
+
+.remember {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.remember input {
+    width: 16px;
+    height: 16px;
+
+    accent-color: #0866ff;
+
+    cursor: pointer;
+}
+
+.forgot {
+    border: none;
+
+    background: transparent;
+
+    color: #0866ff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.forgot:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+#loginButton {
+    width: 100%;
+
+    height: 54px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0866ff,
+            #0546b8
+        );
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+
+    box-shadow:
+        0 10px 25px rgba(
+            8,
+            102,
+            255,
+            0.25
+        );
+}
+
+#loginButton:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 14px 30px rgba(
+            8,
+            102,
+            255,
+            0.30
+        );
+}
+
+#loginButton:active {
+    transform: translateY(0);
+}
+
+#loginButton:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin: 28px 0;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #e5e7eb;
+}
+
+/* =========================================
+   SIGN UP
+========================================= */
+
+.signup {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+.signup button {
+    border: none;
+
+    background: transparent;
+
+    color: #0866ff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.signup button:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   HOME
+========================================= */
+
+.home {
+    display: block;
+
+    margin-top: 25px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    text-decoration: none;
+}
+
+.home:hover {
+    color: #0866ff;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .login-page {
+        padding: 20px 15px;
+    }
+
+    .login-card {
+        max-width: 100%;
+
+        padding: 30px 22px;
+
+        border-radius: 20px;
+    }
+
+    .logo h1 {
+        font-size: 23px;
+    }
+
+    .options {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .forgot {
+        padding: 0;
+    }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+    .login-card {
+        padding: 25px 18px;
+    }
+
+    .logo-box {
+        width: 64px;
+        height: 64px;
+    }
+
+    .logo h1 {
+        font-size: 21px;
+    }
+
+}
+/* =====================================
+   LOGGED-IN NAVIGATION
+===================================== */
+
+.auth-user {
+    display: none;
+    align-items: center;
+    gap: 12px;
+}
+
+.auth-user.show {
+    display: flex;
+}
+
+.auth-user-name {
+    font-weight: 600;
+    color: #172033;
+}
+
+.logout-btn {
+    border: none;
+    background: #0866ff;
+    color: #fff;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #0546b8;
+    transform: translateY(-1px);
+}
+
+/* Hide login/signup when logged in */
+
+body.user-logged-in #loginNav {
+    display: none;
+}
+
+body.user-logged-in #signupNav {
+    display: none;
+}
+/* =====================================================
+   BLUE AI BUTTON
+===================================================== */
+
+.blue-ai-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 72px;
+    height: 72px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #0866ff;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 15px 35px rgba(8, 102, 255, 0.35);
+
+    z-index: 9998;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.blue-ai-button:hover {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 20px 45px rgba(8, 102, 255, 0.45);
+}
+
+.blue-ai-button.active {
+    transform: scale(0.95);
+}
+
+
+/* =====================================================
+   BLUE AI CHAT
+===================================================== */
+
+.blue-ai-chat {
+    position: fixed;
+
+    right: 25px;
+    bottom: 110px;
+
+    width: 390px;
+    max-width: calc(100vw - 30px);
+
+    height: 600px;
+    max-height: calc(100vh - 140px);
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.20);
+
+    border: 1px solid #e5e7eb;
+
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(20px)
+        scale(0.96);
+
+    transform-origin:
+        bottom right;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.blue-ai-chat.open {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =====================================================
+   BLUE AI HEADER
+===================================================== */
+
+.blue-ai-header {
+    min-height: 76px;
+
+    padding: 15px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #0866ff;
+
+    color: white;
+}
+
+
+.blue-ai-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.blue-ai-logo {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: #0866ff;
+
+    font-weight: 900;
+    font-size: 20px;
+}
+
+
+.blue-ai-brand strong {
+    display: block;
+
+    font-size: 17px;
+}
+
+
+.blue-ai-brand small {
+    display: block;
+
+    margin-top: 2px;
+
+    opacity: 0.85;
+
+    font-size: 12px;
+}
+
+
+.blue-ai-close {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    font-size: 27px;
+
+    cursor: pointer;
+}
+
+
+.blue-ai-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.blue-ai-messages {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 18px;
+
+    background: #f7f9fc;
+
+    scroll-behavior: smooth;
+}
+
+
+.blue-ai-message {
+    display: flex;
+
+    margin-bottom: 15px;
+}
+
+
+.blue-ai-message.bot {
+    justify-content: flex-start;
+}
+
+
+.blue-ai-message.user {
+    justify-content: flex-end;
+}
+
+
+.blue-ai-bubble {
+    max-width: 82%;
+
+    padding: 12px 14px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: #172033;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.blue-ai-message.user
+.blue-ai-bubble {
+    background: #0866ff;
+
+    color: white;
+
+    border-bottom-right-radius: 5px;
+}
+
+
+.blue-ai-message.bot
+.blue-ai-bubble {
+    border-bottom-left-radius: 5px;
+}
+
+
+.blue-ai-bubble strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 13px;
+}
+
+
+.blue-ai-bubble p {
+    margin: 0;
+
+    line-height: 1.55;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   TYPING
+===================================================== */
+
+.typing-dots {
+    display: flex;
+
+    gap: 4px;
+
+    margin-top: 7px;
+}
+
+
+.typing-dots span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #0866ff;
+
+    animation:
+        blueAiTyping 1.2s infinite;
+}
+
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+
+@keyframes blueAiTyping {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-4px);
+    }
+}
+
+
+/* =====================================================
+   SUGGESTIONS
+===================================================== */
+
+.blue-ai-suggestions {
+    display: flex;
+
+    gap: 7px;
+
+    padding: 10px;
+
+    overflow-x: auto;
+
+    background: white;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.blue-ai-suggestions button {
+    flex: 0 0 auto;
+
+    border: 1px solid #dbe2ea;
+
+    background: white;
+
+    color: #172033;
+
+    border-radius: 20px;
+
+    padding: 8px 12px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+}
+
+
+.blue-ai-suggestions button:hover {
+    border-color: #0866ff;
+
+    color: #0866ff;
+
+    background: #f3f7ff;
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.blue-ai-input {
+    display: flex;
+
+    gap: 8px;
+
+    padding: 12px;
+
+    background: white;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.blue-ai-input input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 45px;
+
+    border: 1px solid #d9e0e8;
+
+    border-radius: 12px;
+
+    padding:
+        0 13px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+
+.blue-ai-input input:focus {
+    border-color: #0866ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(8, 102, 255, 0.10);
+}
+
+
+.blue-ai-input button {
+    height: 45px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 0 17px;
+
+    background: #0866ff;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.blue-ai-input button:hover {
+    background: #0546b8;
+}
+
+
+.blue-ai-input button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .blue-ai-button {
+        right: 16px;
+        bottom: 16px;
+
+        width: 62px;
+        height: 62px;
+    }
+
+
+    .blue-ai-chat {
+        right: 10px;
+        bottom: 90px;
+
+        width: calc(100vw - 20px);
+
+        height:
+            calc(100vh - 110px);
+
+        max-height: none;
+
+        border-radius: 18px;
+    }
+
+}
+/* =====================================
+   BLUE AI BUTTON
+====================================== */
+
+.blue-ai-button {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9998;
+
+    border: none;
+    border-radius: 50px;
+
+    padding: 15px 22px;
+
+    background: #0866ff;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 35px rgba(8, 102, 255, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.blue-ai-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 40px rgba(8, 102, 255, 0.45);
+}
+
+
+/* =====================================
+   BLUE AI CHAT
+====================================== */
+
+.blue-ai-chat {
+    position: fixed;
+
+    right: 24px;
+    bottom: 85px;
+
+    width: 380px;
+    max-width: calc(100vw - 32px);
+    height: 570px;
+    max-height: calc(100vh - 110px);
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(20px)
+        scale(0.96);
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 25px 80px rgba(7, 26, 51, 0.25);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+.blue-ai-chat.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+
+/* =====================================
+   AI HEADER
+====================================== */
+
+.blue-ai-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    background: #0866ff;
+    color: #ffffff;
+}
+
+.blue-ai-header div {
+    display: flex;
+    flex-direction: column;
+}
+
+.blue-ai-header strong {
+    font-size: 18px;
+}
+
+.blue-ai-header small {
+    margin-top: 3px;
+    opacity: 0.8;
+}
+
+.blue-ai-header button {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+/* =====================================
+   MESSAGES
+====================================== */
+
+.blue-ai-messages {
+    flex: 1;
+
+    padding: 18px;
+
+    overflow-y: auto;
+
+    background: #f6f8fc;
+}
+
+.blue-ai-message {
+    display: flex;
+    margin-bottom: 14px;
+}
+
+.blue-ai-message.bot {
+    justify-content: flex-start;
+}
+
+.blue-ai-message.user {
+    justify-content: flex-end;
+}
+
+.blue-ai-bubble {
+    max-width: 85%;
+
+    padding: 13px 15px;
+
+    border-radius: 16px;
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.blue-ai-message.bot
+.blue-ai-bubble {
+    background: #ffffff;
+    color: #172033;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-bottom-left-radius: 5px;
+}
+
+.blue-ai-message.user
+.blue-ai-bubble {
+    background: #0866ff;
+    color: #ffffff;
+
+    border-bottom-right-radius: 5px;
+}
+
+.blue-ai-bubble p {
+    margin: 7px 0 0;
+}
+
+.blue-ai-bubble ul {
+    margin:
+        8px 0 0 18px;
+
+    padding: 0;
+}
+
+
+/* =====================================
+   SUGGESTIONS
+====================================== */
+
+.blue-ai-suggestions {
+    display: flex;
+    gap: 7px;
+
+    padding: 10px;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border-top:
+        1px solid #e5e7eb;
+}
+
+.blue-ai-suggestions button {
+    flex: 0 0 auto;
+
+    border: 1px solid #dbe3ef;
+
+    background: #ffffff;
+
+    color: #0866ff;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.blue-ai-suggestions button:hover {
+    background: #f1f6ff;
+}
+
+
+/* =====================================
+   INPUT
+====================================== */
+
+.blue-ai-input {
+    display: flex;
+    gap: 8px;
+
+    padding: 12px;
+
+    background: #ffffff;
+
+    border-top:
+        1px solid #e5e7eb;
+}
+
+.blue-ai-input input {
+    flex: 1;
+
+    min-width: 0;
+
+    border:
+        1px solid #dbe3ef;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.blue-ai-input input:focus {
+    border-color: #0866ff;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 102, 255, 0.1);
+}
+
+.blue-ai-input button {
+    border: none;
+
+    background: #0866ff;
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 0 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* =====================================
+   TYPING
+====================================== */
+
+.blue-ai-typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.blue-ai-typing span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #0866ff;
+
+    animation:
+        blueAiTyping 1.2s infinite ease-in-out;
+}
+
+.blue-ai-typing span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.blue-ai-typing span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes blueAiTyping {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+====================================== */
+
+@media (max-width: 600px) {
+
+    .blue-ai-button {
+        right: 16px;
+        bottom: 16px;
+
+        padding: 13px 18px;
+    }
+
+    .blue-ai-chat {
+        right: 12px;
+        bottom: 75px;
+
+        width: calc(100vw - 24px);
+
+        height: calc(100vh - 100px);
+
+        max-height: none;
+
+        border-radius: 18px;
+    }
+
+}
 /* =========================================
    PRICE + BUTTON
    ========================================= */

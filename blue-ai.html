@@ -1,109 +1,1474 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description" content="Blue AI - TBS Intelligent Assistant">
+    <meta name="theme-color" content="#0866ff">
+
     <title>Blue AI | TBS</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            color: #172033;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+        .blue-ai {
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            height: 100dvh;
+            margin: auto;
+
+            display: flex;
+            flex-direction: column;
+
+            background: #fff;
+            overflow: hidden;
+
+            box-shadow: 0 0 60px rgba(7, 26, 51, .10);
+        }
+
+        /* ================= HEADER ================= */
+
+        .ai-header {
+            height: 76px;
+            padding: 12px 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #fff;
+            border-bottom: 1px solid #e6ebf2;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #172033;
+            text-decoration: none;
+        }
+
+        .ai-logo {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #0866ff,
+                #0546b8
+            );
+
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 22px rgba(8, 102, 255, .25);
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-text p {
+            margin-top: 3px;
+            font-size: 12px;
+            color: #737d8d;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-btn,
+        .clear-btn {
+            height: 38px;
+            padding: 0 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            border-radius: 10px;
+
+            background: #f3f6fb;
+            color: #172033;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+            text-decoration: none;
+
+            transition: .2s ease;
+        }
+
+        .home-btn:hover,
+        .clear-btn:hover {
+            background: #e8eef8;
+            color: #0866ff;
+        }
+
+        /* ================= ONLINE ================= */
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #16753c;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .online-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+
+            background: #20b15a;
+
+            box-shadow:
+                0 0 0 4px rgba(32, 177, 90, .12);
+        }
+
+        /* ================= CHAT ================= */
+
+        .chat-container {
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 30px 25px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f8fbff,
+                    #ffffff
+                );
+
+            scroll-behavior: smooth;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #ccd5e2;
+            border-radius: 10px;
+        }
+
+        .message {
+            width: 100%;
+            display: flex;
+            margin-bottom: 22px;
+        }
+
+        .ai-message {
+            justify-content: flex-start;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        /* ================= AVATAR ================= */
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0866ff,
+                    #0546b8
+                );
+
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+
+            margin-right: 10px;
+        }
+
+        .user-avatar {
+            margin-left: 10px;
+            margin-right: 0;
+            background: #172033;
+        }
+
+        /* ================= BUBBLE ================= */
+
+        .bubble {
+            max-width: 760px;
+
+            padding: 14px 17px;
+
+            border-radius:
+                5px 17px 17px 17px;
+
+            background: white;
+
+            border: 1px solid #e1e7f0;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, .04);
+
+            line-height: 1.65;
+        }
+
+        .user-bubble {
+            border: none;
+
+            border-radius:
+                17px 17px 5px 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0866ff,
+                    #0756d7
+                );
+
+            color: white;
+        }
+
+        .bubble strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .bubble p {
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ================= TYPING ================= */
+
+        .typing {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 0;
+        }
+
+        .typing span {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #0866ff;
+
+            animation:
+                typingAnimation
+                1.2s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: .30s;
+        }
+
+        @keyframes typingAnimation {
+            0%,
+            60%,
+            100% {
+                opacity: .3;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-4px);
+            }
+        }
+
+        /* ================= SUGGESTIONS ================= */
+
+        .suggestions {
+            display: flex;
+            gap: 9px;
+
+            padding: 12px 20px;
+
+            overflow-x: auto;
+
+            background: white;
+
+            border-top: 1px solid #edf0f5;
+
+            flex-shrink: 0;
+        }
+
+        .suggestion-btn {
+            flex-shrink: 0;
+
+            padding: 9px 14px;
+
+            border: 1px solid #dce3ee;
+
+            border-radius: 30px;
+
+            background: white;
+
+            color: #172033;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .suggestion-btn:hover {
+            color: #0866ff;
+            border-color: #0866ff;
+            background: #f5f9ff;
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 20px;
+
+            background: white;
+
+            border-top: 1px solid #e5eaf2;
+
+            flex-shrink: 0;
+        }
+
+        .user-input {
+            flex: 1;
+            min-width: 0;
+
+            height: 50px;
+
+            padding: 0 17px;
+
+            border: 1px solid #dce3ee;
+
+            border-radius: 14px;
+
+            outline: none;
+
+            background: #f8faff;
+
+            color: #172033;
+
+            font-size: 14px;
+
+            transition: .2s ease;
+        }
+
+        .user-input:focus {
+            border-color: #0866ff;
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(8, 102, 255, .08);
+        }
+
+        .voice-btn,
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .voice-btn {
+            background: #f0f4fa;
+            color: #172033;
+        }
+
+        .voice-btn:hover {
+            background: #e4eaf3;
+        }
+
+        .voice-btn.listening {
+            background: #ffe9e9;
+            color: #d62828;
+
+            animation: voicePulse 1s infinite;
+        }
+
+        @keyframes voicePulse {
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .send-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0866ff,
+                    #0546b8
+                );
+
+            color: white;
+
+            box-shadow:
+                0 7px 18px
+                rgba(8, 102, 255, .20);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .send-btn:disabled,
+        .voice-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer-text {
+            padding: 0 20px 12px;
+
+            text-align: center;
+
+            color: #8992a2;
+
+            background: white;
+
+            font-size: 11px;
+
+            flex-shrink: 0;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .ai-header {
+                height: 68px;
+                padding: 10px 14px;
+            }
+
+            .ai-logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand-text h1 {
+                font-size: 18px;
+            }
+
+            .home-btn {
+                display: none;
+            }
+
+            .chat-container {
+                padding: 20px 12px;
+            }
+
+            .bubble {
+                max-width: 85%;
+            }
+
+            .suggestions {
+                padding: 10px 12px;
+            }
+
+            .input-area {
+                padding: 10px 12px;
+            }
+
+            .voice-btn,
+            .send-btn {
+                width: 45px;
+                height: 45px;
+                min-width: 45px;
+            }
+
+            .user-input {
+                height: 45px;
+                font-size: 13px;
+            }
+
+            .online {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .online {
+                display: none;
+            }
+
+            .bubble {
+                max-width: 82%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- BLUE AI -->
-    <main class="blue-ai">
+<main class="blue-ai">
 
-        <header class="ai-header">
+    <!-- HEADER -->
+    <header class="ai-header">
 
-            <a href="index.html" class="brand">
+        <a href="index.html" class="brand">
 
-                <div class="ai-logo">B</div>
+            <div class="ai-logo">
+                B
+            </div>
 
-                <div>
-                    <h1>Blue AI</h1>
-                    <p>Powered by TBS</p>
-                </div>
+            <div class="brand-text">
+                <h1>Blue AI</h1>
+                <p>Powered by TBS</p>
+            </div>
 
+        </a>
+
+        <div class="header-actions">
+
+            <a href="index.html" class="home-btn">
+                <i class="fa-solid fa-house"></i>
+                Home
             </a>
 
+            <button
+                type="button"
+                class="clear-btn"
+                id="clearChat"
+            >
+                <i class="fa-solid fa-trash"></i>
+                Clear
+            </button>
+
             <div class="online">
-                <span></span>
+                <span class="online-dot"></span>
                 Online
             </div>
 
-        </header>
+        </div>
 
-        <!-- CHAT -->
-        <section class="chat-container" id="chatContainer">
+    </header>
 
-            <div class="message ai-message">
-                <div class="avatar">B</div>
 
-                <div class="bubble">
-                    <strong>Blue AI</strong>
+    <!-- CHAT -->
+    <section
+        class="chat-container"
+        id="chatContainer"
+        aria-live="polite"
+    >
 
-                    <p>
-                        Hello! I'm Blue AI, the intelligent assistant
-                        from TBS. Ask me anything — technology, business,
-                        coding, school, writing, ideas, or questions about TBS.
-                    </p>
-                </div>
+        <div class="message ai-message">
+
+            <div class="avatar">
+                B
             </div>
 
-        </section>
+            <div class="bubble">
 
-        <!-- SUGGESTIONS -->
-        <div class="suggestions">
+                <strong>Blue AI</strong>
 
-            <button type="button" data-question="What services does TBS offer?">
-                TBS Services
-            </button>
+                <p>
+Hello! I'm Blue AI, the intelligent assistant from TBS.
 
-            <button type="button" data-question="Give me a business idea">
-                Business Idea
-            </button>
+Ask me about coding, websites, business, digital marketing, school work, writing, technology or TBS.
+                </p>
 
-            <button type="button" data-question="Help me learn JavaScript">
-                Learn Coding
-            </button>
-
-            <button type="button" data-question="What can you help me with?">
-                What can you do?
-            </button>
+            </div>
 
         </div>
 
-        <!-- INPUT -->
-        <footer class="input-area">
+    </section>
 
-            <button class="voice-btn" id="voiceBtn" type="button" title="Voice input">
-                🎙
-            </button>
 
-            <input
-                type="text"
-                id="userInput"
-                placeholder="Ask Blue AI anything..."
-                autocomplete="off"
-            >
+    <!-- SUGGESTIONS -->
+    <div class="suggestions">
 
-            <button class="send-btn" id="sendBtn" type="button">
-                ➤
-            </button>
+        <button
+            class="suggestion-btn"
+            data-question="What services does TBS offer?"
+        >
+            TBS Services
+        </button>
 
-        </footer>
+        <button
+            class="suggestion-btn"
+            data-question="Give me a business idea"
+        >
+            Business Idea
+        </button>
 
-        <div class="footer-text">
-            Blue AI • TBS Intelligent Assistant
-        </div>
+        <button
+            class="suggestion-btn"
+            data-question="Teach me JavaScript"
+        >
+            Learn Coding
+        </button>
 
-    </main>
+        <button
+            class="suggestion-btn"
+            data-question="What can Blue AI help me with?"
+        >
+            What can you do?
+        </button>
 
-    <script src="api-config.js"></script>
-    <script src="script.js"></script>
+    </div>
+
+
+    <!-- INPUT -->
+    <footer class="input-area">
+
+        <button
+            type="button"
+            class="voice-btn"
+            id="voiceBtn"
+            title="Voice input"
+        >
+            <i class="fa-solid fa-microphone"></i>
+        </button>
+
+        <input
+            type="text"
+            class="user-input"
+            id="userInput"
+            placeholder="Ask Blue AI anything..."
+            autocomplete="off"
+            maxlength="2000"
+        >
+
+        <button
+            type="button"
+            class="send-btn"
+            id="sendBtn"
+            title="Send message"
+        >
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+
+    </footer>
+
+
+    <div class="footer-text">
+        Blue AI • TBS Intelligent Assistant
+    </div>
+
+</main>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const chatContainer =
+        document.getElementById("chatContainer");
+
+    const userInput =
+        document.getElementById("userInput");
+
+    const sendBtn =
+        document.getElementById("sendBtn");
+
+    const voiceBtn =
+        document.getElementById("voiceBtn");
+
+    const clearChat =
+        document.getElementById("clearChat");
+
+    const suggestionButtons =
+        document.querySelectorAll(".suggestion-btn");
+
+    let isThinking = false;
+
+
+    /* ==========================================
+       ESCAPE HTML
+    ========================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+    }
+
+
+    /* ==========================================
+       SCROLL
+    ========================================== */
+
+    function scrollToBottom() {
+
+        chatContainer.scrollTop =
+            chatContainer.scrollHeight;
+    }
+
+
+    /* ==========================================
+       USER MESSAGE
+    ========================================== */
+
+    function addUserMessage(text) {
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message user-message";
+
+        message.innerHTML = `
+
+            <div class="bubble user-bubble">
+
+                <strong>You</strong>
+
+                <p>
+                    ${escapeHTML(text)}
+                </p>
+
+            </div>
+
+            <div class="avatar user-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+        `;
+
+        chatContainer.appendChild(message);
+
+        scrollToBottom();
+    }
+
+
+    /* ==========================================
+       AI MESSAGE
+    ========================================== */
+
+    function addAIMessage(text) {
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message ai-message";
+
+        message.innerHTML = `
+
+            <div class="avatar">
+                B
+            </div>
+
+            <div class="bubble">
+
+                <strong>Blue AI</strong>
+
+                <p>
+                    ${escapeHTML(text)}
+                </p>
+
+            </div>
+
+        `;
+
+        chatContainer.appendChild(message);
+
+        scrollToBottom();
+    }
+
+
+    /* ==========================================
+       TYPING
+    ========================================== */
+
+    function showTyping() {
+
+        const message =
+            document.createElement("div");
+
+        message.id = "typingMessage";
+
+        message.className =
+            "message ai-message";
+
+        message.innerHTML = `
+
+            <div class="avatar">
+                B
+            </div>
+
+            <div class="bubble">
+
+                <strong>Blue AI</strong>
+
+                <div class="typing">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+        `;
+
+        chatContainer.appendChild(message);
+
+        scrollToBottom();
+    }
+
+
+    function removeTyping() {
+
+        const typing =
+            document.getElementById(
+                "typingMessage"
+            );
+
+        if (typing) {
+            typing.remove();
+        }
+    }
+
+
+    /* ==========================================
+       LOCAL BLUE AI
+    ========================================== */
+
+    function localAI(question) {
+
+        const q =
+            question.toLowerCase().trim();
+
+
+        if (
+            q === "hi" ||
+            q === "hello" ||
+            q === "hey"
+        ) {
+
+            return "Hello! I'm Blue AI from TBS. How can I help you today?";
+        }
+
+
+        if (
+            q.includes("tbs") &&
+            (
+                q.includes("service") ||
+                q.includes("offer")
+            )
+        ) {
+
+            return `
+TBS (The Blue Style) provides:
+
+• Website development
+• Digital marketing
+• Branding
+• Graphic design
+• Printing
+• Fashion
+• Technology products
+• Online shopping solutions
+• AI solutions
+
+I can also help you build and improve your TBS website.
+            `;
+        }
+
+
+        if (
+            q.includes("what can you do") ||
+            q.includes("what do you do") ||
+            q.includes("help me")
+        ) {
+
+            return `
+I can help you with:
+
+• HTML
+• CSS
+• JavaScript
+• Websites
+• Node.js
+• Business ideas
+• Digital marketing
+• TBS projects
+• School work
+• Presentations
+• Writing
+• Problem solving
+• Technology
+
+Ask me your question and I'll try to help.
+            `;
+        }
+
+
+        if (
+            q.includes("business idea") ||
+            q.includes("business ideas")
+        ) {
+
+            return `
+A good business idea is custom T-shirt printing.
+
+You can create shirts for:
+
+• Schools
+• Churches
+• Sports teams
+• Companies
+• Events
+• Individuals
+
+Start small, advertise on social media and reinvest your profits.
+            `;
+        }
+
+
+        if (
+            q.includes("javascript") ||
+            q.includes("learn coding")
+        ) {
+
+            return `
+A good JavaScript learning path is:
+
+1. Variables
+2. Data types
+3. Functions
+4. Conditions
+5. Loops
+6. Arrays
+7. Objects
+8. DOM
+9. Events
+10. APIs
+
+I can teach you each topic step by step.
+            `;
+        }
+
+
+        if (q.includes("html")) {
+
+            return `
+HTML creates the structure of a website.
+
+For example:
+
+<h1>Hello World</h1>
+
+HTML works together with CSS and JavaScript to create websites.
+            `;
+        }
+
+
+        if (q.includes("css")) {
+
+            return `
+CSS controls how your website looks.
+
+You can use CSS for:
+
+• Colors
+• Layouts
+• Buttons
+• Animations
+• Responsive design
+• Cards
+• Navigation bars
+            `;
+        }
+
+
+        if (
+            q.includes("website") ||
+            q.includes("web site")
+        ) {
+
+            return `
+I can help you build a professional website using:
+
+HTML
+CSS
+JavaScript
+Node.js
+
+You can also add:
+
+• Login
+• Registration
+• Products
+• Cart
+• Payments
+• Admin dashboard
+• AI
+• Contact forms
+            `;
+        }
+
+
+        if (
+            q.includes("thank") ||
+            q.includes("thanks")
+        ) {
+
+            return "You're welcome! I'm ready to help.";
+        }
+
+
+        return `
+I received your question:
+
+"${question}"
+
+Blue AI is connected to your TBS website.
+
+For full AI answers to general questions, connect the /api/ai/chat endpoint to your AI backend.
+        `;
+    }
+
+
+    /* ==========================================
+       BACKEND AI
+    ========================================== */
+
+    async function askBackend(question) {
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/ai/chat",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                message: question
+                            })
+                    }
+                );
+
+
+            if (!response.ok) {
+                return null;
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data &&
+                typeof data.reply === "string" &&
+                data.reply.trim()
+            ) {
+
+                return data.reply;
+            }
+
+
+            if (
+                data &&
+                typeof data.message === "string" &&
+                data.message.trim()
+            ) {
+
+                return data.message;
+            }
+
+
+            return null;
+
+        }
+        catch (error) {
+
+            console.log(
+                "AI backend unavailable:",
+                error.message
+            );
+
+            return null;
+        }
+    }
+
+
+    /* ==========================================
+       SEND MESSAGE
+    ========================================== */
+
+    async function sendMessage(text) {
+
+        if (isThinking) {
+            return;
+        }
+
+
+        const question =
+            text.trim();
+
+
+        if (!question) {
+
+            userInput.focus();
+
+            return;
+        }
+
+
+        if (question.length > 2000) {
+
+            addAIMessage(
+                "Your message is too long. Please keep it under 2000 characters."
+            );
+
+            return;
+        }
+
+
+        isThinking = true;
+
+        sendBtn.disabled = true;
+        userInput.disabled = true;
+
+
+        addUserMessage(question);
+
+        userInput.value = "";
+
+        showTyping();
+
+
+        try {
+
+            const backendReply =
+                await askBackend(question);
+
+
+            removeTyping();
+
+
+            if (backendReply) {
+
+                addAIMessage(
+                    backendReply
+                );
+
+            }
+            else {
+
+                await new Promise(
+                    resolve =>
+                        setTimeout(
+                            resolve,
+                            500
+                        )
+                );
+
+                addAIMessage(
+                    localAI(question)
+                );
+            }
+
+        }
+        catch (error) {
+
+            removeTyping();
+
+            console.error(error);
+
+            addAIMessage(
+                "Sorry, Blue AI could not process your message."
+            );
+        }
+
+
+        isThinking = false;
+
+        sendBtn.disabled = false;
+
+        userInput.disabled = false;
+
+        userInput.focus();
+    }
+
+
+    /* ==========================================
+       SEND BUTTON
+    ========================================== */
+
+    sendBtn.addEventListener(
+        "click",
+        () => {
+
+            sendMessage(
+                userInput.value
+            );
+
+        }
+    );
+
+
+    /* ==========================================
+       ENTER
+    ========================================== */
+
+    userInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                sendMessage(
+                    userInput.value
+                );
+            }
+        }
+    );
+
+
+    /* ==========================================
+       SUGGESTIONS
+    ========================================== */
+
+    suggestionButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const question =
+                        button.dataset.question;
+
+                    sendMessage(question);
+                }
+            );
+        }
+    );
+
+
+    /* ==========================================
+       CLEAR
+    ========================================== */
+
+    clearChat.addEventListener(
+        "click",
+        () => {
+
+            chatContainer.innerHTML = `
+
+                <div class="message ai-message">
+
+                    <div class="avatar">
+                        B
+                    </div>
+
+                    <div class="bubble">
+
+                        <strong>Blue AI</strong>
+
+                        <p>
+                            Chat cleared. How can I help you?
+                        </p>
+
+                    </div>
+
+                </div>
+            `;
+
+            userInput.focus();
+        }
+    );
+
+
+    /* ==========================================
+       VOICE INPUT
+    ========================================== */
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        voiceBtn.addEventListener(
+            "click",
+            () => {
+
+                addAIMessage(
+                    "Voice input is not supported by this browser. Please use Google Chrome."
+                );
+            }
+        );
+
+    }
+    else {
+
+        const recognition =
+            new SpeechRecognition();
+
+
+        recognition.lang = "en-US";
+
+        recognition.continuous = false;
+
+        recognition.interimResults = false;
+
+
+        voiceBtn.addEventListener(
+            "click",
+            () => {
+
+                try {
+
+                    recognition.start();
+
+                    voiceBtn.classList.add(
+                        "listening"
+                    );
+
+                }
+                catch (error) {
+
+                    console.log(error);
+                }
+            }
+        );
+
+
+        recognition.onresult =
+            event => {
+
+                const transcript =
+                    event.results[0][0]
+                        .transcript;
+
+                userInput.value =
+                    transcript;
+
+                userInput.focus();
+            };
+
+
+        recognition.onend =
+            () => {
+
+                voiceBtn.classList.remove(
+                    "listening"
+                );
+            };
+
+
+        recognition.onerror =
+            () => {
+
+                voiceBtn.classList.remove(
+                    "listening"
+                );
+            };
+    }
+
+
+    /* ==========================================
+       START
+    ========================================== */
+
+    userInput.focus();
+
+});
+
+</script>
 
 </body>
-
 </html>

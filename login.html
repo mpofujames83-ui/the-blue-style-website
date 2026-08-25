@@ -20,9 +20,7 @@
         content="#0866ff"
     >
 
-    <title>
-        Login | TBS AI
-    </title>
+    <title>Login | TBS AI</title>
 
     <link
         rel="stylesheet"
@@ -33,6 +31,150 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     >
+
+    <style>
+
+        /* =====================================
+           LOGIN MESSAGE
+        ===================================== */
+
+        .login-message {
+            display: none;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .login-message.error {
+            display: block;
+            background: #fff1f1;
+            color: #c62828;
+            border: 1px solid #ffcaca;
+        }
+
+        .login-message.success {
+            display: block;
+            background: #edfff4;
+            color: #16753c;
+            border: 1px solid #b9efcc;
+        }
+
+
+        /* =====================================
+           GOOGLE LOGIN
+        ===================================== */
+
+        .google-login-button {
+            width: 100%;
+            min-height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+
+            margin-top: 18px;
+
+            background: #ffffff;
+            color: #172033;
+
+            border: 1px solid #d9dee8;
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .google-login-button:hover {
+            transform: translateY(-2px);
+
+            border-color: #0866ff;
+
+            box-shadow:
+                0 8px 25px rgba(8, 102, 255, 0.12);
+        }
+
+        .google-login-button:active {
+            transform: translateY(0);
+        }
+
+        .google-login-button:disabled {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
+        .google-icon {
+            width: 25px;
+            height: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 20px;
+            font-weight: 700;
+
+            color: #4285f4;
+        }
+
+        .google-spinner {
+            width: 18px;
+            height: 18px;
+
+            border: 2px solid #d9dee8;
+            border-top-color: #0866ff;
+
+            border-radius: 50%;
+
+            animation: googleSpin 0.7s linear infinite;
+        }
+
+        @keyframes googleSpin {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* =====================================
+           LOADING
+        ===================================== */
+
+        .login-submit.loading {
+            opacity: 0.75;
+            cursor: wait;
+        }
+
+
+        /* =====================================
+           FIELD ERRORS
+        ===================================== */
+
+        .field-error {
+            display: block;
+            color: #d62828;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+    </style>
 
 </head>
 
@@ -125,7 +267,9 @@
     <div class="login-container">
 
 
-        <!-- LEFT SIDE -->
+        <!-- =================================
+             LEFT SIDE
+        ================================== -->
 
         <div class="login-intro">
 
@@ -141,13 +285,14 @@
 
 
             <p>
-                Sign in to your TBS account to manage
+                Login to your TBS account to manage
                 your orders, view your account and
                 connect with The Blue Style.
             </p>
 
 
             <div class="login-features">
+
 
                 <div class="login-feature">
 
@@ -214,15 +359,19 @@
 
                 </div>
 
+
             </div>
 
         </div>
 
 
 
-        <!-- LOGIN CARD -->
+        <!-- =================================
+             LOGIN CARD
+        ================================== -->
 
         <div class="login-card">
+
 
             <div class="login-card-header">
 
@@ -233,7 +382,7 @@
                 <div>
 
                     <h2>
-                        Sign in
+                        Login
                     </h2>
 
                     <p>
@@ -245,7 +394,7 @@
             </div>
 
 
-            <!-- STATUS MESSAGE -->
+            <!-- STATUS -->
 
             <div
                 id="loginMessage"
@@ -255,7 +404,9 @@
             ></div>
 
 
-            <!-- LOGIN FORM -->
+            <!-- =================================
+                 LOGIN FORM
+            ================================== -->
 
             <form
                 id="loginForm"
@@ -329,6 +480,7 @@
                             minlength="6"
                         >
 
+
                         <button
                             type="button"
                             class="password-toggle"
@@ -354,7 +506,7 @@
 
 
 
-                <!-- REMEMBER -->
+                <!-- REMEMBER ME -->
 
                 <div class="login-options">
 
@@ -384,7 +536,7 @@
                 >
 
                     <span id="loginButtonText">
-                        Sign In
+                        Login
                     </span>
 
                     <i
@@ -395,6 +547,37 @@
 
 
             </form>
+
+
+            <!-- =================================
+                 GOOGLE LOGIN
+            ================================== -->
+
+            <div class="login-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="googleLogin"
+                class="google-login-button"
+            >
+
+                <span class="google-icon">
+                    G
+                </span>
+
+                <span>
+                    Continue with Google
+                </span>
+
+            </button>
+
 
 
             <!-- SIGN UP -->
@@ -412,16 +595,8 @@
             </div>
 
 
-            <!-- DIVIDER -->
 
-            <div class="login-divider">
-
-                <span>
-                    TBS AI
-                </span>
-
-            </div>
-
+            <!-- SECURE NOTE -->
 
             <p class="secure-note">
 
@@ -431,6 +606,7 @@
                 The Blue Style
 
             </p>
+
 
         </div>
 
@@ -489,12 +665,14 @@
                 <i class="fa-brands fa-facebook"></i>
             </a>
 
+
             <a
                 href="#"
                 aria-label="Instagram"
             >
                 <i class="fa-brands fa-instagram"></i>
             </a>
+
 
             <a
                 href="https://www.tiktok.com/@james.with.friend"
@@ -504,6 +682,7 @@
             >
                 <i class="fa-brands fa-tiktok"></i>
             </a>
+
 
             <a
                 href="https://whatsapp.com/channel/0029VbDYs1n4IBhB6yA5dR1R"
@@ -531,10 +710,9 @@
 
 
 <!-- =====================================
-     JAVASCRIPT
+     LOGIN JAVASCRIPT
 ====================================== -->
 
-<script src="api-config.js"></script>
 <script>
 
 document.addEventListener(
@@ -601,65 +779,10 @@ document.addEventListener(
                 "navLinks"
             );
 
-
-
-        /* =================================
-           SHOW / HIDE PASSWORD
-        ================================= */
-
-        togglePassword.addEventListener(
-            "click",
-            function () {
-
-                const isPassword =
-                    password.type === "password";
-
-
-                password.type =
-                    isPassword
-                    ? "text"
-                    : "password";
-
-
-                togglePassword.innerHTML =
-                    isPassword
-                    ?
-                    '<i class="fa-regular fa-eye-slash"></i>'
-                    :
-                    '<i class="fa-regular fa-eye"></i>';
-
-
-                togglePassword.setAttribute(
-                    "aria-label",
-                    isPassword
-                    ? "Hide password"
-                    : "Show password"
-                );
-
-            }
-        );
-
-
-
-        /* =================================
-           REMEMBERED EMAIL
-        ================================= */
-
-        const savedEmail =
-            localStorage.getItem(
-                "tbsRememberedEmail"
+        const googleLogin =
+            document.getElementById(
+                "googleLogin"
             );
-
-
-        if (savedEmail) {
-
-            email.value =
-                savedEmail;
-
-            rememberMe.checked =
-                true;
-
-        }
 
 
 
@@ -688,6 +811,70 @@ document.addEventListener(
 
             loginMessage.className =
                 "login-message";
+
+        }
+
+
+
+        /* =================================
+           SHOW / HIDE PASSWORD
+        ================================= */
+
+        if (togglePassword) {
+
+            togglePassword.addEventListener(
+                "click",
+                function () {
+
+                    const isPassword =
+                        password.type === "password";
+
+
+                    password.type =
+                        isPassword
+                        ? "text"
+                        : "password";
+
+
+                    togglePassword.innerHTML =
+                        isPassword
+                        ?
+                        '<i class="fa-regular fa-eye-slash"></i>'
+                        :
+                        '<i class="fa-regular fa-eye"></i>';
+
+
+                    togglePassword.setAttribute(
+                        "aria-label",
+                        isPassword
+                        ? "Hide password"
+                        : "Show password"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           REMEMBER EMAIL
+        ================================= */
+
+        const savedEmail =
+            localStorage.getItem(
+                "tbsRememberedEmail"
+            );
+
+
+        if (savedEmail) {
+
+            email.value =
+                savedEmail;
+
+            rememberMe.checked =
+                true;
 
         }
 
@@ -730,6 +917,7 @@ document.addEventListener(
                 valid = false;
 
             }
+
             else if (
                 !email.checkValidity()
             ) {
@@ -752,6 +940,7 @@ document.addEventListener(
                 valid = false;
 
             }
+
             else if (
                 password.value.length < 6
             ) {
@@ -771,12 +960,72 @@ document.addEventListener(
 
 
         /* =================================
-           LOGIN
+           CREATE USER
+        ================================= */
+
+        function createUser(
+            emailAddress
+        ) {
+
+            const username =
+                emailAddress
+                    .split("@")[0]
+                    .replace(/[._-]/g, " ")
+                    .trim();
+
+
+            const fullName =
+                username
+                    .replace(
+                        /\b\w/g,
+                        function (letter) {
+                            return letter.toUpperCase();
+                        }
+                    );
+
+
+            return {
+
+                id:
+                    "TBS-" +
+                    Date.now(),
+
+                full_name:
+                    fullName ||
+                    "TBS Customer",
+
+                email:
+                    emailAddress,
+
+                role:
+                    "customer",
+
+                loginMethod:
+                    "email",
+
+                loggedIn:
+                    true,
+
+                loginTime:
+                    new Date().toISOString()
+
+            };
+
+        }
+
+
+
+        /* =================================
+           EMAIL LOGIN
+
+           DEMO MODE:
+           ANY EMAIL
+           ANY PASSWORD 6+ CHARACTERS
         ================================= */
 
         form.addEventListener(
             "submit",
-            async function (event) {
+            function (event) {
 
                 event.preventDefault();
 
@@ -802,164 +1051,196 @@ document.addEventListener(
                     true;
 
                 loginButtonText.textContent =
-                    "Signing in...";
+                    "Logging in...";
 
                 loginButton.classList.add(
                     "loading"
                 );
 
 
-                try {
+                setTimeout(
+                    function () {
 
-                    const response =
-                        await window.tbsFetch(
-                            "/auth/login",
-                            {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify({
-
-                                        email:
-                                            email.value.trim(),
-
-                                        password:
-                                            password.value
-
-                                    })
-
-                            }
-                        );
+                        const emailAddress =
+                            email.value
+                                .trim()
+                                .toLowerCase();
 
 
-                    const data =
-                        await response.json()
-                            .catch(
-                                () => ({})
+                        const user =
+                            createUser(
+                                emailAddress
                             );
 
 
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.message ||
-                            "Invalid email or password."
-                        );
-
-                    }
-
-
-                    /* SAVE EMAIL */
-
-                    if (
-                        rememberMe.checked
-                    ) {
+                        /* SAVE USER */
 
                         localStorage.setItem(
-                            "tbsRememberedEmail",
-                            email.value.trim()
+                            "tbsUser",
+                            JSON.stringify(user)
                         );
 
-                    }
-                    else {
 
-                        localStorage.removeItem(
-                            "tbsRememberedEmail"
+                        localStorage.setItem(
+                            "tbsLoggedIn",
+                            "true"
                         );
 
-                    }
+
+                        localStorage.setItem(
+                            "tbsToken",
+                            "TBS-DEMO-" +
+                            Date.now()
+                        );
 
 
-                    /* SAVE USER */
+                        /* REMEMBER */
 
-                    if (data.user) {
+                        if (
+                            rememberMe.checked
+                        ) {
+
+                            localStorage.setItem(
+                                "tbsRememberedEmail",
+                                emailAddress
+                            );
+
+                        }
+
+                        else {
+
+                            localStorage.removeItem(
+                                "tbsRememberedEmail"
+                            );
+
+                        }
+
+
+                        /* SUCCESS */
+
+                        showMessage(
+                            "Login successful! Welcome to TBS.",
+                            "success"
+                        );
+
+
+                        loginButtonText.textContent =
+                            "Success";
+
+
+                        /* REDIRECT */
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "index.html";
+
+                            },
+                            800
+                        );
+
+
+                    },
+                    700
+                );
+
+            }
+        );
+
+
+
+        /* =================================
+           GOOGLE LOGIN
+
+           DEMO GOOGLE LOGIN
+        ================================= */
+
+        googleLogin?.addEventListener(
+            "click",
+            function () {
+
+                googleLogin.disabled =
+                    true;
+
+
+                googleLogin.innerHTML = `
+                    <span class="google-spinner"></span>
+                    <span>Connecting...</span>
+                `;
+
+
+                setTimeout(
+                    function () {
+
+                        const googleUser = {
+
+                            id:
+                                "GOOGLE-" +
+                                Date.now(),
+
+                            full_name:
+                                "Google User",
+
+                            email:
+                                "googleuser@gmail.com",
+
+                            role:
+                                "customer",
+
+                            loginMethod:
+                                "google",
+
+                            loggedIn:
+                                true,
+
+                            loginTime:
+                                new Date().toISOString()
+
+                        };
+
 
                         localStorage.setItem(
                             "tbsUser",
                             JSON.stringify(
-                                data.user
+                                googleUser
                             )
                         );
 
-                    }
 
+                        localStorage.setItem(
+                            "tbsLoggedIn",
+                            "true"
+                        );
 
-                    if (data.token) {
 
                         localStorage.setItem(
                             "tbsToken",
-                            data.token
+                            "TBS-GOOGLE-DEMO-" +
+                            Date.now()
                         );
 
-                    }
-
-
-                    showMessage(
-                        "Login successful! Redirecting...",
-                        "success"
-                    );
-
-
-                    loginButtonText.textContent =
-                        "Success";
-
-
-                    setTimeout(
-                        function () {
-
-                            window.location.href = data.user?.role === "admin"
-                                ? "admin.html"
-                                : "index.html";
-
-                        },
-                        1000
-                    );
-
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "Login error:",
-                        error
-                    );
-
-
-                    if (error instanceof TypeError && /fetch|network|failed/i.test(error.message)) {
 
                         showMessage(
-                            "Cannot connect to TBS server. Make sure your backend is running on port 5000.",
-                            "error"
+                            "Google login successful!",
+                            "success"
                         );
 
-                    }
-                    else {
 
-                        showMessage(
-                            error.message,
-                            "error"
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "index.html";
+
+                            },
+                            800
                         );
 
-                    }
 
-
-                    loginButton.disabled =
-                        false;
-
-                    loginButtonText.textContent =
-                        "Sign In";
-
-                    loginButton.classList.remove(
-                        "loading"
-                    );
-
-                }
+                    },
+                    900
+                );
 
             }
         );
@@ -970,18 +1251,14 @@ document.addEventListener(
            FORGOT PASSWORD
         ================================= */
 
-        forgotPassword.addEventListener(
+        forgotPassword?.addEventListener(
             "click",
             function (event) {
 
                 event.preventDefault();
 
 
-                const userEmail =
-                    email.value.trim();
-
-
-                if (!userEmail) {
+                if (!email.value.trim()) {
 
                     showMessage(
                         "Enter your email address first.",
@@ -996,7 +1273,7 @@ document.addEventListener(
 
 
                 showMessage(
-                    "Password recovery will be available soon. Please contact TBS support.",
+                    "For the TBS demo, enter any new password with 6 or more characters.",
                     "success"
                 );
 
@@ -1026,7 +1303,7 @@ document.addEventListener(
 
                     mobileMenuBtn.setAttribute(
                         "aria-expanded",
-                        open
+                        String(open)
                     );
 
 
@@ -1054,10 +1331,12 @@ document.addEventListener(
                                     "open"
                                 );
 
+
                                 mobileMenuBtn.setAttribute(
                                     "aria-expanded",
                                     "false"
                                 );
+
 
                                 mobileMenuBtn.innerHTML =
                                     '<i class="fa-solid fa-bars"></i>';
@@ -1070,12 +1349,13 @@ document.addEventListener(
 
         }
 
-
     }
 
 );
 
 </script>
 
+
 </body>
+
 </html>
