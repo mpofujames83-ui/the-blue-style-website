@@ -7038,6 +7038,64 @@ img {
     }
 }
 
+/* =========================================
+   PRIVATE FOOTER ADMIN ACCESS
+========================================= */
+
+.footer-bottom {
+    position: relative;
+    padding-right: 52px;
+}
+
+.footer-admin-link {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, .62);
+    font-size: 15px;
+    text-decoration: none;
+    transform: translateY(50%);
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.footer-admin-link:hover,
+.footer-admin-link:focus-visible {
+    background: var(--tbs-blue, #0866ff);
+    border-color: var(--tbs-blue, #0866ff);
+    color: #ffffff;
+    transform: translateY(50%) rotate(18deg);
+}
+
+.footer-admin-link:focus-visible {
+    outline: 3px solid rgba(8, 102, 255, .35);
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .footer-bottom {
+        padding-right: 0;
+        padding-bottom: 46px;
+    }
+
+    .footer-admin-link {
+        right: 50%;
+        bottom: 7px;
+        transform: translateX(50%);
+    }
+
+    .footer-admin-link:hover,
+    .footer-admin-link:focus-visible {
+        transform: translateX(50%) rotate(18deg);
+    }
+}
+
 /* Final shop filter layout override. */
 .shop-filters {
     display: flex !important;
