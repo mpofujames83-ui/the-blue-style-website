@@ -51,8 +51,8 @@ router.post(
             for (const item of items) {
 
                 const product = db.prepare(
-                    "SELECT * FROM products WHERE id = ?"
-                ).get(item.product_id);
+                    "SELECT * FROM products WHERE id = ? OR slug = ?"
+                ).get(item.product_id, item.product_id);
 
                 if (!product) {
                     return res.status(404).json({

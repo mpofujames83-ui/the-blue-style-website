@@ -4,12 +4,53 @@ const jwt = require("jsonwebtoken");
 const db = require("../database");
 const config = require("../config/env");
 const validateBody = require("../middleware/validate");
+const authenticateToken = require("../middleware/auth");
 
 const router = express.Router();
 
 
 // REGISTER
-router.post("/register", validateBody({
+async function registerUser(req, res) {
+    try {
+        const { full_name, email, phone, password } = req.body;
+        const normalizedEmail = email.trim().toLowerCase();
+        const existingUser = db.prepare("SELECT id FROM users WHERE email = ?").get(normalizedEmail);
+        if (existingUser) return res.status(409).json({ success: false, message: "Email already registered" });
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const result = db.prepare("INSERT INTO users (full_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)").run(full_name.trim(), normalizedEmail, phone || "", hashedPassword, "customer");
+        const user = { id: Number(result.lastInsertRowid), full_name: full_name.trim(), email: normalizedEmail, phone: phone || "", role: "customer" };
+        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, config.jwtSecret, { expiresIn: config.jwtExpiresIn });
+        res.status(201).json({ success: true, message: "Account created successfully", token, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+}
+
+const registrationValidation = validateBody({
+    full_name: { required: true, max: 120 },
+    email: { required: true, max: 254 },
+    password: { required: true, max: 128 }
+});
+
+router.post("/register", registrationValidation, registerUser);
+router.post("/signup", registrationValidation, registerUser);
+
+router.get("/me", authenticateToken, (req, res) => {
+    const user = db.prepare("SELECT id, full_name, email, phone, role, created_at, last_login FROM users WHERE id = ?").get(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.json({ success: true, user });
+});
+
+router.post("/logout", authenticateToken, (req, res) => {
+    res.json({ success: true, message: "Session ended. Remove the client token to complete logout." });
+});
+
+router.get("/google", (req, res) => res.status(503).json({ success: false, message: "Google OAuth is not configured. Add provider credentials before enabling it." }));
+router.get("/facebook", (req, res) => res.status(503).json({ success: false, message: "Facebook OAuth is not configured. Add provider credentials before enabling it." }));
+
+/* Legacy registration implementation retained below for compatibility context. */
+router.post("/register-legacy", validateBody({
     full_name: { required: true, max: 120 },
     email: { required: true, max: 254 },
     password: { required: true, max: 128 }
@@ -58,9 +99,24 @@ router.post("/register", validateBody({
             "customer"
         );
 
+        const user = {
+            id: Number(result.lastInsertRowid),
+            full_name: full_name.trim(),
+            email: normalizedEmail,
+            phone: phone || "",
+            role: "customer"
+        };
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: user.role },
+            config.jwtSecret,
+            { expiresIn: config.jwtExpiresIn }
+        );
+
         res.status(201).json({
+            success: true,
             message: "Account created successfully",
-            userId: result.lastInsertRowid
+            token,
+            user
         });
 
     } catch (error) {

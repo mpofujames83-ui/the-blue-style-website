@@ -6,6 +6,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     console.log("TBS JavaScript loaded");
+    window.__tbsBlueAiInitialized = true;
 
 
     /* =====================================================
@@ -376,8 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const response =
-                await fetch(
-                    `${API_BASE}/ai/chat`,
+                await window.tbsFetch(
+                    "/ai/chat",
                     {
                         method: "POST",
 
@@ -667,6 +668,16 @@ document.addEventListener("DOMContentLoaded", () => {
             ".tbs-product"
         );
 
+    const productSearch = document.getElementById("productSearch");
+
+    function matchesProduct(product, filter) {
+        const category = product.dataset.category;
+        const term = productSearch?.value.trim().toLowerCase() || "";
+        const searchable = `${product.textContent} ${category}`.toLowerCase();
+        const categoryMatches = filter === "all" || category === filter || (filter === "picks" && product.dataset.pick === "true");
+        return categoryMatches && searchable.includes(term);
+    }
+
 
     filterButtons.forEach(
         (button) => {
@@ -698,17 +709,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     products.forEach(
                         (product) => {
 
-                            const category =
-                                product.dataset.category;
-
-
-                            const show =
-                                filter === "all" ||
-                                category === filter ||
-                                (
-                                    filter === "picks" &&
-                                    product.dataset.pick === "true"
-                                );
+                            const show = matchesProduct(product, filter);
 
 
                             product.style.display =
@@ -724,6 +725,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
+
+    productSearch?.addEventListener("input", () => {
+        const filter = document.querySelector(".filter-btn.active")?.dataset.filter || "all";
+        products.forEach(product => { product.style.display = matchesProduct(product, filter) ? "" : "none"; });
+    });
 
 
     /* =====================================================
@@ -1007,6 +1013,8 @@ document.addEventListener("DOMContentLoaded", () => {
 ====================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.__tbsBlueAiInitialized) return;
 
     const blueAiButton = document.getElementById("blueAiButton");
     const blueAiChat = document.getElementById("blueAiChat");

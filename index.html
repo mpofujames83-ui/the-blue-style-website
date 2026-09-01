@@ -101,29 +101,14 @@
 
     <div class="header-actions">
 
-        <button
+        <a
             class="cart-button"
             id="cartBtn"
+            href="cart.html"
             type="button"
         >
             Cart
             <span id="cartCount">0</span>
-        </button>
-
-
-        <a
-            href="login.html"
-            class="btn btn-dark"
-        >
-            Login
-        </a>
-
-
-        <a
-            href="signup.html"
-            class="btn btn-primary"
-        >
-            Sign Up
         </a>
 
 
@@ -377,6 +362,11 @@
         role="tablist"
         aria-label="Product categories"
     >
+
+        <label class="shop-search" for="productSearch">
+            <span>Search</span>
+            <input id="productSearch" type="search" placeholder="Search products" autocomplete="off">
+        </label>
 
         <button
             class="filter-btn active"
@@ -1458,25 +1448,6 @@
     </div>
 
 
-    <div class="account-buttons">
-
-        <a
-            class="btn btn-primary"
-            href="login.html"
-        >
-            Sign In
-        </a>
-
-
-        <a
-            class="btn btn-outline-dark"
-            href="signup.html"
-        >
-            Create Account
-        </a>
-
-    </div>
-
 </section>
 
 </main>
@@ -1963,6 +1934,8 @@
 ====================================== -->
 
 <script src="api-config.js"></script>
+
+<script src="js/auth.js"></script>
 
 <script src="script.js"></script>
 

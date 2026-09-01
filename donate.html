@@ -18,6 +18,7 @@
   <section id="successView" class="card success"><span class="eyebrow">TBS SUPPORT</span><h1>Thank You for Supporting TBS</h1><p>Every contribution helps The Blue Style continue growing its fashion, technology, printing, and digital services.</p><p>Your donation reference is:</p><div class="reference" id="reference"></div><p id="successStatus">Your donation is awaiting payment confirmation.</p><a class="submit" href="index.html">Return to TBS</a></section>
 </main>
 <script src="api-config.js"></script>
+<script src="js/auth.js"></script>
 <script>
 const form=document.getElementById('donationForm'), amount=document.getElementById('amount'), status=document.getElementById('status'), summaryAmount=document.getElementById('summaryAmount'), summaryMethod=document.getElementById('summaryMethod');
 function update(){const value=Number(amount.value)||0; summaryAmount.textContent=`$${value.toFixed(2)}`; summaryMethod.textContent=document.querySelector('[name=payment_method]:checked').value.replace('_',' ')}

@@ -22,6 +22,7 @@ db.exec(`
 
     CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT UNIQUE,
         name TEXT NOT NULL,
         description TEXT,
         price REAL NOT NULL,
@@ -197,5 +198,21 @@ if (!analyticsVisitorColumns.includes("display_name")) db.exec("ALTER TABLE anal
 const userColumns = db.prepare("PRAGMA table_info(users)").all().map(column => column.name);
 if (!userColumns.includes("profile_photo")) db.exec("ALTER TABLE users ADD COLUMN profile_photo TEXT");
 if (!userColumns.includes("last_login")) db.exec("ALTER TABLE users ADD COLUMN last_login DATETIME");
+
+const productColumns = db.prepare("PRAGMA table_info(products)").all().map(column => column.name);
+if (!productColumns.includes("slug")) db.exec("ALTER TABLE products ADD COLUMN slug TEXT");
+db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_products_slug ON products(slug)");
+const seedProducts = [
+    ["custom-print-tee", "Custom Print Tee", "Made for your design", 22, "printing", "images/Blue Style.png"],
+    ["tbs-hoodie", "TBS Hoodie", "Comfortable premium hoodie", 35, "fashion", "images/Hoodie.png"],
+    ["smartphone", "Smartphone", "Modern smart device", 180, "tech", "images/phone.jpg"],
+    ["smart-watch", "Smart Watch", "Stay connected on the go", 45, "tech", "images/ww.jpg"],
+    ["wireless-earbuds", "Wireless Earbuds", "Compact wireless audio", 28, "tech", "images/hphones.jpg"],
+    ["tbs-cap", "TBS Cap", "Everyday cap with the TBS identity", 12, "fashion", "images/cap.png"],
+    ["power-bank", "Power Bank", "Reliable portable power for busy days", 30, "tech", "images/image.png"],
+    ["tbs-mug", "TBS Mug", "Branded mug for everyday moments", 15, "printing", "images/cup.png"]
+];
+const seedProduct = db.prepare("INSERT OR IGNORE INTO products (slug, name, description, price, category, image_url, stock) VALUES (?, ?, ?, ?, ?, ?, 100)");
+seedProducts.forEach(product => seedProduct.run(...product));
 
 module.exports = db;

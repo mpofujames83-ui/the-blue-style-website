@@ -15,6 +15,7 @@ const contactRoutes = require("./routes/contact");
 const analyticsRoutes = require("./routes/analytics");
 const donationRoutes = require("./routes/donations");
 const adminRoutes = require("./routes/admin");
+const aiRoutes = require("./routes/ai");
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.get("/", (req, res) => res.json({ success: true, name: "TBS Backend", brand:
 app.get("/api/health", (req, res) => res.json({ success: true, status: "ok", service: "tbs-api", environment: config.nodeEnv, timestamp: new Date().toISOString() }));
 app.use("/api", apiLimiter);
 app.use("/api/auth", authLimiter, authRoutes);
+app.use("/api", authLimiter, authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
@@ -61,6 +63,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/donations", donationRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

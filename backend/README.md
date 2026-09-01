@@ -36,10 +36,13 @@ Set a long random `JWT_SECRET` in `.env`. Never commit `.env`, `data/`, or payme
 ## API flow
 
 1. Register or log in at `POST /api/auth/register` or `POST /api/auth/login`.
+	Compatibility aliases are also available at `POST /api/signup` and `POST /api/login`.
 2. Send `Authorization: Bearer <token>` for checkout and customer/admin endpoints.
 3. Read products from `GET /api/products` and send product IDs plus quantities to `POST /api/orders`.
 4. The server validates stock, calculates totals from its catalog, creates an order number, decrements stock atomically, and records payment status.
 5. Admins use `GET /api/orders`, `PUT /api/orders/:id/status`, `GET /api/products`, and `GET /api/users`.
+
+Authentication also exposes `GET /api/auth/me` and `POST /api/auth/logout` (both protected). Google and Facebook buttons intentionally return a configuration error until real OAuth client credentials and callback handlers are configured; they never create fake accounts or tokens.
 
 ## Visitor analytics
 
